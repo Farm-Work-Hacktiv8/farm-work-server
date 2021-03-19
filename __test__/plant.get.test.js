@@ -1,6 +1,6 @@
 const app = require("../app");
 const request = require("supertest");
-const { User } = require("../models");
+const { User, sequelize } = require("../models");
 const { clearDBPlant, clearDBUser } = require("../helper/clearDB");
 const { newToken } = require("../helper/access_token");
 
@@ -39,9 +39,8 @@ beforeAll((done) => {
 afterAll((done) => {
     clearDBPlant()
         .then(() => {
-            return clearDBUser();
-        })
-        .then((data) => {
+            clearDBUser();
+            sequelize.close()
             done();
         })
         .catch((err) => {
@@ -66,7 +65,7 @@ describe("GET /plants", () => {
     it("should send response with 403 status code", (done) => {
         request(app)
             .get(`/plants`)
-            .set("access_token", token2)
+            .set("access_token", "wrong token")
             .end((err, res) => {
                 err ? done(err) : 
                 

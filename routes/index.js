@@ -7,7 +7,7 @@ const authenticate = require('../middleware/authenticate')
 router.use('/', userRoute)
 router.use(authenticate)
 router.use('/fields', fieldRoute)
-// router.use('/plants', plantRoute)
+router.use('/plants', plantRoute)
 
 module.exports = router
 

@@ -1,6 +1,6 @@
 const app = require("../app");
 const request = require("supertest");
-const { User, Plant } = require("../models");
+const { User, Plant, sequelize } = require("../models");
 const { clearDBPlant, clearDBUser } = require("../helper/clearDB");
 const { newToken } = require("../helper/access_token");
 
@@ -42,7 +42,7 @@ beforeAll((done) => {
             done();
         })
         .catch((err) => {
-            console.log(err);
+            done(err)
         });
 });
 
@@ -52,10 +52,11 @@ afterAll((done) => {
             return clearDBUser()
         })
         .then((data) => {
+            sequelize.close()
             done();
         })
         .catch((err) => {
-            console.log(err);
+            done(err)
         });
 });
 
@@ -77,8 +78,17 @@ describe("PUT /plants/:id", () => {
                 
                 expect(res.statusCode).toEqual(200);
                 expect(typeof res.body).toEqual("object");
-                expect(res.body).toHaveProperty("message");
-                expect(typeof res.body.message).toEqual("string")
+                expect(res.body).toHaveProperty("id");
+                expect(res.body).toHaveProperty("plantName");
+                expect(res.body).toHaveProperty("harvestTime");
+                expect(res.body).toHaveProperty("createdAt");
+                expect(res.body).toHaveProperty("updatedAt");
+
+                expect(res.body.id).toEqual(id)
+                expect(res.body.plantName).toEqual(res.body.plantName)
+                expect(res.body.harvestTime).toEqual(res.body.harvestTime)
+                expect(typeof res.body.createdAt).toEqual("string")
+                expect(typeof res.body.updatedAt).toEqual("string")
 
                 done();
             });
@@ -101,10 +111,8 @@ describe("PUT /plants/:id", () => {
                 expect(res.statusCode).toEqual(400);
                 expect(typeof res.body).toEqual("object");
                 expect(res.body).toHaveProperty("error");
-                expect(Array.isArray(res.body.error)).toEqual(true);
-                expect(res.body.error).toEqual(
-                    expect.arrayContaining(["Plant name is required."])
-                );
+                expect(res.body.error).toEqual("Plant name is required.")
+                done()
             });
     });
 
@@ -125,10 +133,8 @@ describe("PUT /plants/:id", () => {
                 expect(res.statusCode).toEqual(400);
                 expect(typeof res.body).toEqual("object");
                 expect(res.body).toHaveProperty("error");
-                expect(Array.isArray(res.body.error)).toEqual(true);
-                expect(res.body.error).toEqual(
-                    expect.arrayContaining(["Harvest time should be greater than 1 day."])
-                );
+                expect(res.body.error).toEqual("Harvest time should be greater than 1 day.")
+                done()
             });
     });
 
