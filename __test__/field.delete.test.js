@@ -1,8 +1,12 @@
 const app = require("../app");
 const request = require("supertest");
-const { User } = require("../models");
+const { User, Field } = require("../models");
 const { clearDBField, clearDBUser } = require("../helper/clearDB");
 const { newToken } = require("../helper/access_token");
+
+let token
+let token2 = ''
+let id
 
 const user = {
     firstName: "Wahyu",
@@ -12,9 +16,11 @@ const user = {
     password: "123456",
 };
 
-let token
-let token2 = ''
-let id
+const field = {
+    fieldName: "kebon jukut",
+    fieldArea: 100,
+    userId: id
+};
 
 beforeAll((done) => {
     User.create(user)
@@ -29,8 +35,11 @@ beforeAll((done) => {
                 firstName: data.firstName,
                 lastName: data.lastName,
             };
-            id = data.id
             token = newToken(payload);
+            return Field.create(field)
+        })
+        .then((data)=> {
+            id = data.id
             done();
         })
         .catch((err) => {
@@ -53,30 +62,29 @@ afterAll((done) => {
 
 describe("DELETE /fields/:id", () => {
     // Test Case : success- delete field by id
-    it("should send response with 200 status code", function (done) {
+    it("should send response with 200 status code", (done) => {
 
         request(app)
             .delete(`/fields/${id}`)
             .set("access_token", token)
-            .end(function (err, res) {
+            .end((err, res) => {
                 err? done(err) :
  
                 expect(res.statusCode).toEqual(200);
                 expect(typeof res.body).toEqual("object");
-                expect(res.body).toHaveProperty("message");
-                expect(typeof res.body.message).toEqual("string");
-                expect(res.body.message).toEqual("Delete success");
+                expect(res.body).toHaveProperty("msg");
+                expect(typeof res.body.msg).toEqual("string");
                 done();
             });
     })
 
     // Test Case: fail - dont have permission (wrong access token)
-    it("should send response with 403 status code", function (done) {
+    it("should send response with 403 status code", (done) => {
  
         request(app)
             .delete(`/fields/${id}`)
             .set("access_token", token2)
-            .end(function (err, res) {
+            .end((err, res) => {
                 err? done(err) :
 
                 expect(res.statusCode).toEqual(403);
@@ -84,7 +92,7 @@ describe("DELETE /fields/:id", () => {
                 expect(res.body).toHaveProperty("error");
                 expect(typeof res.body.error).toEqual("string");
                 expect(res.body.error).toEqual(
-                   'Please login first'
+                   'Please login first.'
                 );
                 done();
             });
