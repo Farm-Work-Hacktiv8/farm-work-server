@@ -12,7 +12,7 @@ let authenticate = (req, res, next) => {
       }
     })
     .then(data => {
-      if(!data) throw({name: 'custom', msg: 'Please login first', status: 401})
+      if(!data) throw({name: 'custom', msg: 'Please login first.', status: 403})
       req.dataUser = decode
       next()
     })
@@ -21,7 +21,7 @@ let authenticate = (req, res, next) => {
     })
 
   } catch {
-    let err = {name: 'custom', msg: 'Please login first', status: 401}
+    let err = {name: 'custom', msg: 'Please login first.', status: 403}
     next(err)
   }
 }

@@ -40,7 +40,8 @@ module.exports = (sequelize, DataTypes) => {
         notNull: {msg: "Email cannot be NULL"},
         notEmpty: {msg: "Email cannot be Empty"},
         isEmail: {msg: "Invalid Email Format"}
-      }
+      },
+      unique: {msg: 'Email already used'}
     },
     username: {
       type: DataTypes.STRING,

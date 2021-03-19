@@ -30,6 +30,11 @@ class PlantController {
   static editPlant (req, res, next) {
     const {id} = req.params
     const {plantName, harvestTime} = req.body
+
+    if(!plantName) throw ({name: 'custom', status: 400, msg: 'Plant name is required.'})
+
+    if(harvestTime <= 0) throw ({name: 'custom', status: 400, msg: "Harvest time should be greater than 1 day."})
+
     Plant.update({plantName, harvestTime}, {where : {id}, returning: true})
     .then((plant) => {
       res.status(200).json(plant[1][0])
@@ -43,7 +48,7 @@ class PlantController {
     const {id} = req.params
     Plant.destroy({where: {id}, returning: true})
     .then((data) => {
-      res.status(200).json({msg: 'deleted succesfully'})
+      res.status(200).json({msg: 'Delete success'})
     })
     .catch((err) => {
       next(err)

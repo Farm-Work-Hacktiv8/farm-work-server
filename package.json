@@ -10,9 +10,9 @@
     "db:create:development": "NODE_ENV=development npm run db:create",
     "db:create:test": "NODE_ENV=test npm run db:create",
     "db:migrate:development": "NODE_ENV=development npm run db:migrate",
-    "db:migrate:test": "NODE_ENV=test npm run db:migrate",
+    "db:migrate:test": "set NODE_ENV=test&&npx sequelize db:migrate",
     "db:migrate:undo:development": "NODE_ENV=development npm run db:migrate:undo:all",
-    "db:migrate:undo:test": "NODE_ENV=test npm run db:migrate:undo:all",
+    "db:migrate:undo:test": "set NODE_ENV=test&&npx sequelize db:migrate:undo:all",
     "dev": "NODE_ENV=development npx nodemon bin/http.js",
     "start": "nodemon bin/http.js",
     "test": "NODE_ENV=test npx jest"

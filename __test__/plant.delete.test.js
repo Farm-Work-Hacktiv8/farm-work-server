@@ -1,6 +1,6 @@
 const app = require("../app");
 const request = require("supertest");
-const { User } = require("../models");
+const { User, sequelize } = require("../models");
 const { clearDBPlant, clearDBUser } = require("../helper/clearDB");
 const { newToken } = require("../helper/access_token");
 
@@ -41,9 +41,8 @@ beforeAll((done) => {
 afterAll((done) => {
     clearDBPlant()
         .then(() => {
-            return clearDBUser();
-        })
-        .then((data) => {
+            clearDBUser();
+            sequelize.close()
             done();
         })
         .catch((err) => {
@@ -62,9 +61,9 @@ describe("DELETE /plants/:id", () => {
                 
                 expect(res.statusCode).toEqual(200);
                 expect(typeof res.body).toEqual("object");
-                expect(res.body).toHaveProperty("message");
-                expect(typeof res.body.message).toEqual("string");
-                expect(res.body.message).toEqual("Delete success");
+                expect(res.body).toHaveProperty("msg");
+                expect(typeof res.body.msg).toEqual("string");
+                expect(res.body.msg).toEqual("Delete success");
                 done();
             });
     });
@@ -81,7 +80,7 @@ describe("DELETE /plants/:id", () => {
                 expect(typeof res.body).toEqual("object");
                 expect(res.body).toHaveProperty("error");
                 expect(typeof res.body.error).toEqual("string");
-                expect(res.body.error).toEqual("Please login first");
+                expect(res.body.error).toEqual("Please login first.");
                 done();
             });
     });

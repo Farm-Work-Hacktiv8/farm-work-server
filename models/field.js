@@ -16,39 +16,39 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Field.init(
-      {
-          fieldName: {
-              type: DataTypes.STRING,
-              validate: {
-                  notEmpty: {
-                      args: true,
-                      msg: "Field name is required.",
-                  },
-              },
+    {
+      fieldName: {
+        type: DataTypes.STRING,
+        validate: {
+          notEmpty: {
+            args: true,
+            msg: "Field name is required.",
           },
-          fieldArea: {
-              type: DataTypes.INTEGER,
-              validate: {
-                  notEmpty: {
-                      args: true,
-                      msg: "Field area is required.",
-                  },
-              },
-          },
-          userId: {
-              type: DataTypes.STRING,
-              validate: {
-                  notEmpty: {
-                      args: true,
-                      msg: "Field must have its owner.",
-                  },
-              },
-          },
+        },
       },
-      {
-          sequelize,
-          modelName: "Field",
-      }
+      fieldArea: {
+        type: DataTypes.INTEGER,
+        validate: {
+          notEmpty: {
+            args: true,
+            msg: "Field area is required.",
+          },
+        },
+      },
+      userId: {
+        type: DataTypes.STRING,
+        validate: {
+          notEmpty: {
+            args: true,
+            msg: "Field must have its owner.",
+          },
+        },
+      },
+    },
+    {
+      sequelize,
+      modelName: "Field",
+    }
   );
   return Field;
 };
