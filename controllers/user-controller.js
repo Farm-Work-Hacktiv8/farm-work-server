@@ -12,19 +12,28 @@ class UserController {
       password: req.body.password,
     }
 
-    User.create(newUser)
-    .then(data => {
-      res.status(201).json({
-        id: data.id,
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email,
-        username: req.body.username,
+    User.findOne({
+      where: {
+        username: req.body.username
+      }
+    })
+      .then(user => {
+        if(user) throw ({name: 'custom', status: 400, msg: 'Username already used'})
+
+        return User.create(newUser)
       })
-    })
-    .catch(err => {
-      next(err)
-    })
+      .then(data => {
+        res.status(201).json({
+          id: data.id,
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
+          email: req.body.email,
+          username: req.body.username,
+        })
+      })
+      .catch(err => {
+        next(err)
+      })
   }
 
     static login(req, res, next){
