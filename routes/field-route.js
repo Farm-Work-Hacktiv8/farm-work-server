@@ -1,11 +1,12 @@
 const router = require('express').Router()
+const FieldController = require('../controllers/fields-controller')
 
-router.get('/', Controller)
+router.get('/', FieldController.getFields)
 
-router.post('/', Controller)
+router.post('/', FieldController.addFields)
 
-router.put('/:id', Controller)
+router.put('/:id', FieldController.updateFields)
 
-router.delete('/:id', Controller)
+router.delete('/:id', FieldController.deleteFields)
 
 module.exports = router
