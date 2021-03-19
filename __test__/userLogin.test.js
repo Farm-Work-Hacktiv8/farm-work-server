@@ -1,17 +1,41 @@
 const request = require('supertest');
 const app = require("../app")
-const {sequelize} = require('../models')
+const {sequelize, User} = require('../models')
+
+const user = {
+  firstName: 'Wahyu',
+  lastName: 'Danang',
+  email: 'danang123@gmail.com',
+  username: 'wahyudanang',
+  password: '123456'
+}
+
+beforeAll((done)=> {
+  User.create(user)
+  .then(data => {
+    done()
+  })
+  .catch( err => {
+      console.log(err);
+  })
+})
 
 afterAll((done) => {
-  sequelize.close()
-  done()
+  User.destroy({where: {} })
+    .then(() => {
+      sequelize.close()
+      done()
+    })
+    .catch(err => {
+      console.log(err);
+    })
 })
 
 //===================== success test LOGIN ========================================
 describe('POST /login', function() {
   it('user login return status 200 and access_token', function(done) {
     let body = {
-      username: "budi1234",
+      username: "wahyudanang",
       password: "123456"
     }
 
@@ -37,7 +61,7 @@ describe('POST /login', function() {
 describe('POST /login', function() {
   it('wrong password return status 400 and error msg', function(done) {
     let body = {
-      username: "budi1234" ,
+      username: "wahyudanang" ,
       password: "passwordnya salah"
     }
 

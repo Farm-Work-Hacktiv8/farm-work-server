@@ -3,8 +3,14 @@ const app = require("../app")
 const {sequelize, User} = require('../models')
 
 afterAll((done) => {
-  sequelize.close()
-  done()
+  User.destroy({where: {} })
+    .then(() => {
+      sequelize.close()
+      done()
+    })
+    .catch(err => {
+      console.log(err);
+    })
 })
 
 //===================== success test REGISTER ========================================
@@ -44,13 +50,13 @@ describe('POST /register', function() {
 
 //===================== success test REGISTER with no LastName ==========================
 describe('POST /register', function() {
-  it('user register no firstName return status 201 and error message', function(done) {
+  it('user register no firstName return status 201 and firstName, lastName, email, username', function(done) {
     let body = {
-      firstName: "Budi" ,
-      lastName: "" ,
-      email: "budi@mail.com" ,
-      username: "budi12345" ,
-      password: "123456"
+      firstName: 'Wahyu',
+      lastName: '',
+      email: 'danang123@gmail.com',
+      username: 'wahyudanang',
+      password: '123456'
     }
 
     request(app)
@@ -86,7 +92,7 @@ describe('POST /register', function() {
       firstName: "" ,
       lastName: "Santoso" ,
       email: "budi@mail.com" ,
-      username: "budi1234" ,
+      username: "wahyudanang2" ,
       password: "123456"
     }
 
@@ -115,7 +121,7 @@ describe('POST /register', function() {
       firstName: "Budi" ,
       lastName: "Santoso" ,
       email: "" ,
-      username: "budi1234" ,
+      username: "wahyudanang3" ,
       password: "123456"
     }
 
@@ -144,7 +150,7 @@ describe('POST /register', function() {
       firstName: "Budi" ,
       lastName: "Santoso" ,
       email: "budiaja" ,
-      username: "budi1234" ,
+      username: "wahyudanang4" ,
       password: "123456"
     }
 
@@ -197,7 +203,7 @@ describe('POST /register', function() {
 
 //=============== error test Register Username at least 4 characters ================
 describe('POST /register', function() {
-  it('user register no Username return status 400 and error message', function(done) {
+  it('user register Username < 4 return status 400 and error message', function(done) {
     let body = {
       firstName: "Budi" ,
       lastName: "Santoso" ,
@@ -224,6 +230,35 @@ describe('POST /register', function() {
   });
 });
 
+//=============== error test Register with same Username ================
+describe('POST /register', function() {
+  it('user register with same Username return status 400 and error message', function(done) {
+    let body = {
+      firstName: "Budi" ,
+      lastName: "Santoso" ,
+      email: "budi@mail.com" ,
+      username: "budi1234" ,
+      password: "123456"
+    }
+
+    request(app)
+    .post('/register')
+    .send(body)
+    .end((err, res) => {
+      if(err){
+        done(err)
+      }
+
+      expect(res.status).toEqual(400)
+      expect(typeof res.body).toEqual('object')
+      expect(res.body).toHaveProperty('error')
+
+      expect(res.body.error).toEqual('Username already used')
+      done()
+    });
+  });
+});
+
 //===================== error test Register no Password ============================
 describe('POST /register', function() {
   it('user register no Password return status 400 and error message', function(done) {
@@ -231,7 +266,7 @@ describe('POST /register', function() {
       firstName: "Budi" ,
       lastName: "Santoso" ,
       email: "budi@mail.com" ,
-      username: "budi1234" ,
+      username: "wahyudanang5" ,
       password: ""
     }
 
@@ -255,12 +290,12 @@ describe('POST /register', function() {
 
 //================ error test Register Password at least 6 characters =================
 describe('POST /register', function() {
-  it('user register no Password return status 400 and error message', function(done) {
+  it('user register Password < 6 return status 400 and error message', function(done) {
     let body = {
       firstName: "Budi" ,
       lastName: "Santoso" ,
       email: "budi@mail.com" ,
-      username: "budi1234" ,
+      username: "wahyudanang5" ,
       password: "1234"
     }
 
