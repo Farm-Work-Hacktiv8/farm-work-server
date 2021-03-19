@@ -15,19 +15,40 @@ module.exports = (sequelize, DataTypes) => {
       Field.belongsTo(models.User)
     }
   };
-  Field.init({
-    fieldName: {
-      type: DataTypes.STRING,
-      validate: {
-        notEmpty: {
-          args: true,
-          msg: 'Field name is required.'
-        }
+  Field.init(
+      {
+          fieldName: {
+              type: DataTypes.STRING,
+              validate: {
+                  notEmpty: {
+                      args: true,
+                      msg: "Field name is required.",
+                  },
+              },
+          },
+          fieldArea: {
+              type: DataTypes.INTEGER,
+              validate: {
+                  notEmpty: {
+                      args: true,
+                      msg: "Field area is required.",
+                  },
+              },
+          },
+          userId: {
+              type: DataTypes.STRING,
+              validate: {
+                  notEmpty: {
+                      args: true,
+                      msg: "Field must have its owner.",
+                  },
+              },
+          },
+      },
+      {
+          sequelize,
+          modelName: "Field",
       }
-    }
-  }, {
-    sequelize,
-    modelName: 'Field',
-  });
+  );
   return Field;
 };
