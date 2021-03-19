@@ -1,6 +1,6 @@
 const app = require("../app");
 const request = require("supertest");
-const { User } = require("../models");
+const { User, Field } = require("../models");
 const { clearDBPlant, clearDBUser } = require("../helper/clearDB");
 const { newToken } = require("../helper/access_token");
 
@@ -10,6 +10,12 @@ const user = {
     email: "danang123@gmail.com",
     username: "wahyudanang",
     password: "123456",
+};
+
+const field = {
+    fieldName: "kebun jeruk",
+    fieldArea: 100,
+    userId: 1,
 };
 
 let token;
@@ -31,6 +37,9 @@ beforeAll((done) => {
             };
             id = data.id;
             token = newToken(payload);
+            return Field.create(field)
+        })
+        .then(() => {
             done();
         })
         .catch((err) => {
@@ -53,7 +62,7 @@ afterAll((done) => {
 
 describe("DELETE /plants/:id", () => {
     // Test Case : success- delete Plant by id
-    it("should send response with 200 status code", function (done) {
+    it("should send response with 200 status code", (done) => {
         request(app)
             .delete(`/plants/${id}`)
             .set("access_token", token)
@@ -70,7 +79,7 @@ describe("DELETE /plants/:id", () => {
     });
 
     // Test Case : fail - dont have permission (wrong access token)
-    it("should send response with 403 status code", function (done) {
+    it("should send response with 403 status code", (done) => {
         request(app)
             .delete(`/plants/${id}`)
             .set("access_token", token2)
@@ -81,7 +90,7 @@ describe("DELETE /plants/:id", () => {
                 expect(typeof res.body).toEqual("object");
                 expect(res.body).toHaveProperty("error");
                 expect(typeof res.body.error).toEqual("string");
-                expect(res.body.error).toEqual("Please login first");
+                expect(res.body.error).toEqual("Please login first.");
                 done();
             });
     });

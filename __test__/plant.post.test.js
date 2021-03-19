@@ -76,7 +76,7 @@ describe('POST /plants', () => {
     });
 
     // Test Case : fail - plantName not inposted
-    it("should send response with 400 status code"), (done) => {
+    it("should send response with 400 status code", (done) => {
             const body = {
                 plantName: "",
                 harvestTime: 30,
@@ -99,10 +99,10 @@ describe('POST /plants', () => {
 
                     done();
                 });
-    };
+    })
 
     // Test Case : fail - harvestTime inposted less than 1 day
-    it("should send response with 400 status code"), (done) => {
+    it("should send response with 400 status code", (done) => {
             const body = {
                 plantName: "Mangga",
                 harvestTime: 0,
@@ -127,7 +127,7 @@ describe('POST /plants', () => {
 
                     done();
                 });
-    };
+    })
 
     // Test Case: fail - dont have permission (wrong access token)
     it("should send response with 403 status code", (done) => {

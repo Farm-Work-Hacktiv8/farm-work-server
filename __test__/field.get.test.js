@@ -1,9 +1,10 @@
 const app = require("../app");
 const request = require("supertest");
-const { sequelize, User } = require("../models");
+const { sequelize, User, Field } = require("../models");
 const { clearDBField } = require("../helper/clearDB");
 const { newToken } = require("../helper/access_token");
 
+let id
 const user = {
     firstName: "Wahyu",
     lastName: "Danang",
@@ -12,7 +13,14 @@ const user = {
     password: "123456",
 };
 
+const field = {
+    fieldName: 'kebon jukut',
+    fieldArea: 100,
+    userId: id
+}
+
 let token;
+let token2 =''
 
 beforeAll((done) => {
     User.create(user)
@@ -27,12 +35,15 @@ beforeAll((done) => {
                 firstName: data.firstName,
                 lastName: data.lastName,
             };
-
+            id = data.id
             token = newToken(payload);
-            done();
+            return Field.create(field)
+        })
+        .then(()=>{
+            done()
         })
         .catch((err) => {
-            console.log(err);
+            done(err);
         });
 });
 
@@ -44,6 +55,7 @@ afterAll((done) => {
         })
         .catch((err) => {
             console.log(err);
+            done();
         });
 });
 
@@ -54,25 +66,27 @@ describe("GET /fields", () => {
             .get("/fields")
             .set("access_token", token)
             .end((err, res) => {
-                err ? done(err) : expect(res.status).toEqual(200);
-                expect(typeof res.body).toEqual("array");
+                err ? done(err) : 
+                
+                expect(res.status).toEqual(200);
+                expect(typeof res.body).toEqual("object");
                 done();
             });
     });
 
     // Test Case : fail - dont have permission (wrong access token)
-    it("should send response with 403 status code", function (done) {
+    it("should send response with 403 status code", (done) => {
         request(app)
             .get(`/fields`)
-            .set("access_token", token)
-            .end(function (err, res) {
+            .set("access_token", token2)
+            .end((err, res) => {
                 err ? done(err) : 
                 
                 expect(res.statusCode).toEqual(403);
                 expect(typeof res.body).toEqual("object");
                 expect(res.body).toHaveProperty("error");
                 expect(typeof res.body.error).toEqual("string");
-                expect(res.body.error).toEqual("Please login first");
+                expect(res.body.error).toEqual("Please login first.");
                 done();
             });
     });
