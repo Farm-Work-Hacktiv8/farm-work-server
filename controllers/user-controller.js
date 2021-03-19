@@ -1,4 +1,6 @@
 const { User } = require('../models')
+const {newToken} = require('../helper/access_token')
+const {comparePassword} = require('../helper/bcrypt')
 
 class UserController {
   static register(req, res, next){
@@ -35,10 +37,10 @@ class UserController {
         }
       })
       .then(data => {
-        if(!data) throw ({name: "custom", msg: "Wrong Email or Password", status: 400})
+        if(!data) throw ({name: "custom", msg: "Wrong Username or Password", status: 400})
   
         let compare = comparePassword(password, data.password)
-        if(!compare) throw({name: "custom", msg: "Wrong Email or Password", status: 400})
+        if(!compare) throw({name: "custom", msg: "Wrong Username or Password", status: 400})
   
         let access_token = newToken({
           id: data.id,
