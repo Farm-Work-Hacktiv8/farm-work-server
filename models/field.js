@@ -15,7 +15,6 @@ module.exports = (sequelize, DataTypes) => {
             });
             Field.belongsTo(models.User, { foreignKey: "userId" });
         }
-    }
   };
   Field.init(
     {

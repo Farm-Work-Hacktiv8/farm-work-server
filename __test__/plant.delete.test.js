@@ -4,6 +4,10 @@ const { User, Field, sequelize } = require("../models");
 const { clearDBPlant, clearDBUser } = require("../helper/clearDB");
 const { newToken } = require("../helper/access_token");
 
+let token;
+let token2 = "";
+let id;
+
 const user = {
     firstName: "Wahyu",
     lastName: "Danang",
@@ -15,12 +19,8 @@ const user = {
 const field = {
     fieldName: "kebun jeruk",
     fieldArea: 100,
-    userId: 1,
+    userId: id,
 };
-
-let token;
-let token2 = "";
-let id;
 
 beforeAll((done) => {
     User.create(user)
@@ -35,15 +35,15 @@ beforeAll((done) => {
                 firstName: data.firstName,
                 lastName: data.lastName,
             };
-            id = data.id;
             token = newToken(payload);
             return Field.create(field)
         })
-        .then(() => {
+        .then((data) => {
+            id = data.id;
             done();
         })
         .catch((err) => {
-            console.log(err);
+            done(err)
         });
 });
 
@@ -55,7 +55,7 @@ afterAll((done) => {
             done();
         })
         .catch((err) => {
-            console.log(err);
+            done(err)
         });
 });
 
