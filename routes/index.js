@@ -4,7 +4,7 @@ const fieldRoute = require('./field-route')
 const plantRoute = require('./plant-route')
 
 router.use('/', userRoute)
-router.use('/fields', fieldRoute)
+//router.use('/fields', fieldRoute)
 router.use('/plants', plantRoute)
 
 module.exports = router

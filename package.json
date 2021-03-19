@@ -14,9 +14,9 @@
     "db:migrate:undo:development": "NODE_ENV=development npm run db:migrate:undo:all",
     "db:migrate:undo:test": "NODE_ENV=test npm run db:migrate:undo:all",
     "dev": "NODE_ENV=development npx nodemon bin/http.js",
-    "start": "node bin/http.js",
+    "start": "nodemon bin/http.js",
     "test": "NODE_ENV=test npx jest"
-    },
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Farm-Work-Hacktiv8/farm-work-server.git"

@@ -1,11 +1,11 @@
-const router = require('express').Router()
+// const router = require('express').Router()
 
-router.get('/', Controller)
+// router.get('/', Controller)
 
-router.post('/', Controller)
+// router.post('/', Controller)
 
-router.put('/:id', Controller)
+// router.put('/:id', Controller)
 
-router.delete('/:id', Controller)
+// router.delete('/:id', Controller)
 
-module.exports = router
+// module.exports = router
