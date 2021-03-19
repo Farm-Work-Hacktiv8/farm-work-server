@@ -13,3 +13,7 @@ app.use(router);
 app.use(errorHandling);
 
 module.exports = app;
+
+
+// untuk cek coverage testing jest
+// jest --coverage --watchAll
