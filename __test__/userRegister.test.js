@@ -1,6 +1,6 @@
 const request = require('supertest');
 const app = require("../app")
-const {sequelize} = require('../models')
+const {sequelize, User} = require('../models')
 
 afterAll((done) => {
   sequelize.close()
@@ -9,7 +9,7 @@ afterAll((done) => {
 
 //===================== success test REGISTER ========================================
 describe('POST /register', function() {
-  it('user register return status 201 and firstName, lastName, email, username, createdAt, updatedAt', function(done) {
+  it('user register return status 201 and firstName, lastName, email, username', function(done) {
     let body = {
       firstName: "Budi" ,
       lastName: "Santoso" ,
@@ -32,15 +32,11 @@ describe('POST /register', function() {
       expect(res.body).toHaveProperty('lastName')
       expect(res.body).toHaveProperty('email')
       expect(res.body).toHaveProperty('username')
-      expect(res.body).toHaveProperty('createdAt')
-      expect(res.body).toHaveProperty('updatedAt')
 
       expect(res.body.firstName).toEqual(body.firstName)
       expect(res.body.lastName).toEqual(body.lastName)
       expect(res.body.email).toEqual(body.email)
       expect(res.body.username).toEqual(body.username)
-      expect(typeof res.body.createdAt).toEqual('string')
-      expect(typeof res.body.updatedAt).toEqual('string')
       done()
     });
   });
@@ -48,12 +44,12 @@ describe('POST /register', function() {
 
 //===================== success test REGISTER with no LastName ==========================
 describe('POST /register', function() {
-  it('user register no firstName return status 400 and error message', function(done) {
+  it('user register no firstName return status 201 and error message', function(done) {
     let body = {
       firstName: "Budi" ,
       lastName: "" ,
       email: "budi@mail.com" ,
-      username: "budi1234" ,
+      username: "budi12345" ,
       password: "123456"
     }
 
@@ -71,15 +67,11 @@ describe('POST /register', function() {
       expect(res.body).toHaveProperty('lastName')
       expect(res.body).toHaveProperty('email')
       expect(res.body).toHaveProperty('username')
-      expect(res.body).toHaveProperty('createdAt')
-      expect(res.body).toHaveProperty('updatedAt')
 
       expect(res.body.firstName).toEqual(body.firstName)
       expect(res.body.lastName).toEqual(body.lastName)
       expect(res.body.email).toEqual(body.email)
       expect(res.body.username).toEqual(body.username)
-      expect(typeof res.body.createdAt).toEqual('string')
-      expect(typeof res.body.updatedAt).toEqual('string')
       done()
     });
   });
@@ -106,7 +98,7 @@ describe('POST /register', function() {
         done(err)
       }
 
-      expect(res.status).toEqual(201)
+      expect(res.status).toEqual(400)
       expect(typeof res.body).toEqual('object')
       expect(res.body).toHaveProperty('error')
 
@@ -135,7 +127,7 @@ describe('POST /register', function() {
         done(err)
       }
 
-      expect(res.status).toEqual(201)
+      expect(res.status).toEqual(400)
       expect(typeof res.body).toEqual('object')
       expect(res.body).toHaveProperty('error')
 
@@ -164,7 +156,7 @@ describe('POST /register', function() {
         done(err)
       }
 
-      expect(res.status).toEqual(201)
+      expect(res.status).toEqual(400)
       expect(typeof res.body).toEqual('object')
       expect(res.body).toHaveProperty('error')
 
@@ -193,7 +185,7 @@ describe('POST /register', function() {
         done(err)
       }
 
-      expect(res.status).toEqual(201)
+      expect(res.status).toEqual(400)
       expect(typeof res.body).toEqual('object')
       expect(res.body).toHaveProperty('error')
 
@@ -222,7 +214,7 @@ describe('POST /register', function() {
         done(err)
       }
 
-      expect(res.status).toEqual(201)
+      expect(res.status).toEqual(400)
       expect(typeof res.body).toEqual('object')
       expect(res.body).toHaveProperty('error')
 
@@ -251,7 +243,7 @@ describe('POST /register', function() {
         done(err)
       }
 
-      expect(res.status).toEqual(201)
+      expect(res.status).toEqual(400)
       expect(typeof res.body).toEqual('object')
       expect(res.body).toHaveProperty('error')
 
@@ -280,7 +272,7 @@ describe('POST /register', function() {
         done(err)
       }
 
-      expect(res.status).toEqual(201)
+      expect(res.status).toEqual(400)
       expect(typeof res.body).toEqual('object')
       expect(res.body).toHaveProperty('error')
 

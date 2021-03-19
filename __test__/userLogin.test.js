@@ -11,8 +11,8 @@ afterAll((done) => {
 describe('POST /login', function() {
   it('user login return status 200 and access_token', function(done) {
     let body = {
-      username: "budi1234" ,
-      password: "1234"
+      username: "budi1234",
+      password: "123456"
     }
 
     request(app)
@@ -35,7 +35,7 @@ describe('POST /login', function() {
 
 //===================== error test wrong password  ==========================
 describe('POST /login', function() {
-  it('return status 400 and error msg', function(done) {
+  it('wrong password return status 400 and error msg', function(done) {
     let body = {
       username: "budi1234" ,
       password: "passwordnya salah"
@@ -52,7 +52,7 @@ describe('POST /login', function() {
       expect(res.status).toEqual(400)
       expect(typeof res.body).toEqual('object')
       expect(res.body).toHaveProperty('error')
-      expect(res.body.error).toHaveProperty('Wrong Username or Password')
+      expect(res.body.error).toEqual('Wrong Username or Password')
       done()
     });
   });
@@ -60,10 +60,10 @@ describe('POST /login', function() {
 
 //===================== error test wrong username  ==========================
 describe('POST /login', function() {
-  it('return status 400 and error msg', function(done) {
+  it('wrong username return status 400 and error msg', function(done) {
     let body = {
       username: "username nya salah" ,
-      password: "1234"
+      password: "123456"
     }
 
     request(app)
@@ -77,7 +77,7 @@ describe('POST /login', function() {
       expect(res.status).toEqual(400)
       expect(typeof res.body).toEqual('object')
       expect(res.body).toHaveProperty('error')
-      expect(res.body.error).toHaveProperty('Wrong Username or Password')
+      expect(res.body.error).toEqual('Wrong Username or Password')
       done()
     });
   });
@@ -85,7 +85,7 @@ describe('POST /login', function() {
 
 //===================== error test no username n pass  =========================
 describe('POST /login', function() {
-  it('return status 400 and error msg', function(done) {
+  it('no username n pass return status 400 and error msg', function(done) {
     let body = {
       username: "" ,
       password: ""
@@ -102,7 +102,7 @@ describe('POST /login', function() {
       expect(res.status).toEqual(400)
       expect(typeof res.body).toEqual('object')
       expect(res.body).toHaveProperty('error')
-      expect(res.body.error).toHaveProperty('Wrong Username or Password')
+      expect(res.body.error).toEqual('Wrong Username or Password')
       done()
     });
   });
