@@ -8,7 +8,7 @@ afterAll((done) => {
 })
 
 //===================== success test REGISTER ========================================
-describe('POST /users/register', function() {
+describe('POST /register', function() {
   it('user register return status 201 and firstName, lastName, email, username, createdAt, updatedAt', function(done) {
     let body = {
       firstName: "Budi" ,
@@ -19,7 +19,7 @@ describe('POST /users/register', function() {
     }
 
     request(app)
-    .post('/users/register')
+    .post('/register')
     .send(body)
     .end((err, res) => {
       if(err){
@@ -47,7 +47,7 @@ describe('POST /users/register', function() {
 });
 
 //===================== success test REGISTER with no LastName ==========================
-describe('POST /users/register', function() {
+describe('POST /register', function() {
   it('user register no firstName return status 400 and error message', function(done) {
     let body = {
       firstName: "Budi" ,
@@ -58,7 +58,7 @@ describe('POST /users/register', function() {
     }
 
     request(app)
-    .post('/users/register')
+    .post('/register')
     .send(body)
     .end((err, res) => {
       if(err){
@@ -88,7 +88,7 @@ describe('POST /users/register', function() {
 //===================== error test Register ========================================
 
 //===================== error test Register no FirstName ============================
-describe('POST /users/register', function() {
+describe('POST /register', function() {
   it('user register no firstName return status 400 and error message', function(done) {
     let body = {
       firstName: "" ,
@@ -99,7 +99,7 @@ describe('POST /users/register', function() {
     }
 
     request(app)
-    .post('/users/register')
+    .post('/register')
     .send(body)
     .end((err, res) => {
       if(err){
@@ -117,7 +117,7 @@ describe('POST /users/register', function() {
 });
 
 //===================== error test Register no Email ============================
-describe('POST /users/register', function() {
+describe('POST /register', function() {
   it('user register no Email return status 400 and error message', function(done) {
     let body = {
       firstName: "Budi" ,
@@ -128,7 +128,7 @@ describe('POST /users/register', function() {
     }
 
     request(app)
-    .post('/users/register')
+    .post('/register')
     .send(body)
     .end((err, res) => {
       if(err){
@@ -146,7 +146,7 @@ describe('POST /users/register', function() {
 });
 
 //================= error test Register with invalid email format ==================
-describe('POST /users/register', function() {
+describe('POST /register', function() {
   it('user register with invalid email format return status 400 and error message', function(done) {
     let body = {
       firstName: "Budi" ,
@@ -157,7 +157,7 @@ describe('POST /users/register', function() {
     }
 
     request(app)
-    .post('/users/register')
+    .post('/register')
     .send(body)
     .end((err, res) => {
       if(err){
@@ -175,7 +175,7 @@ describe('POST /users/register', function() {
 });
 
 //===================== error test Register no Username ============================
-describe('POST /users/register', function() {
+describe('POST /register', function() {
   it('user register no Username return status 400 and error message', function(done) {
     let body = {
       firstName: "Budi" ,
@@ -186,7 +186,7 @@ describe('POST /users/register', function() {
     }
 
     request(app)
-    .post('/users/register')
+    .post('/register')
     .send(body)
     .end((err, res) => {
       if(err){
@@ -204,7 +204,7 @@ describe('POST /users/register', function() {
 });
 
 //=============== error test Register Username at least 4 characters ================
-describe('POST /users/register', function() {
+describe('POST /register', function() {
   it('user register no Username return status 400 and error message', function(done) {
     let body = {
       firstName: "Budi" ,
@@ -215,7 +215,7 @@ describe('POST /users/register', function() {
     }
 
     request(app)
-    .post('/users/register')
+    .post('/register')
     .send(body)
     .end((err, res) => {
       if(err){
@@ -233,7 +233,7 @@ describe('POST /users/register', function() {
 });
 
 //===================== error test Register no Password ============================
-describe('POST /users/register', function() {
+describe('POST /register', function() {
   it('user register no Password return status 400 and error message', function(done) {
     let body = {
       firstName: "Budi" ,
@@ -244,7 +244,7 @@ describe('POST /users/register', function() {
     }
 
     request(app)
-    .post('/users/register')
+    .post('/register')
     .send(body)
     .end((err, res) => {
       if(err){
@@ -262,7 +262,7 @@ describe('POST /users/register', function() {
 });
 
 //================ error test Register Password at least 6 characters =================
-describe('POST /users/register', function() {
+describe('POST /register', function() {
   it('user register no Password return status 400 and error message', function(done) {
     let body = {
       firstName: "Budi" ,
@@ -273,7 +273,7 @@ describe('POST /users/register', function() {
     }
 
     request(app)
-    .post('/users/register')
+    .post('/register')
     .send(body)
     .end((err, res) => {
       if(err){

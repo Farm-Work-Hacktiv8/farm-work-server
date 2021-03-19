@@ -52,7 +52,8 @@ module.exports = (sequelize, DataTypes) => {
           args: 4,
           msg: 'Username must contain at leats 4 characters'
         }
-      }
+      },
+      unique: {msg: 'Username already used'}
     },
     password: {
       type: DataTypes.STRING,

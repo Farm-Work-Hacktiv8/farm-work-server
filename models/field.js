@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Field.belongsToMany(models.Plant, { through: "PlantFields", foreignKey: 'fieldId' });
+      Field.belongsTo(models.User)
     }
   };
   Field.init({
