@@ -8,7 +8,7 @@ afterAll((done) => {
 })
 
 //===================== success test LOGIN ========================================
-describe('POST /users/login', function() {
+describe('POST /login', function() {
   it('user login return status 200 and access_token', function(done) {
     let body = {
       username: "budi1234" ,
@@ -16,7 +16,7 @@ describe('POST /users/login', function() {
     }
 
     request(app)
-    .post('/users/login')
+    .post('/login')
     .send(body)
     .end((err, res) => {
       if(err){
@@ -34,7 +34,7 @@ describe('POST /users/login', function() {
 //===================== error test LOGIN ========================================
 
 //===================== error test wrong password  ==========================
-describe('POST /users/login', function() {
+describe('POST /login', function() {
   it('return status 400 and error msg', function(done) {
     let body = {
       username: "budi1234" ,
@@ -42,7 +42,7 @@ describe('POST /users/login', function() {
     }
 
     request(app)
-    .post('/users/login')
+    .post('/login')
     .send(body)
     .end((err, res) => {
       if(err){
@@ -59,7 +59,7 @@ describe('POST /users/login', function() {
 });
 
 //===================== error test wrong username  ==========================
-describe('POST /users/login', function() {
+describe('POST /login', function() {
   it('return status 400 and error msg', function(done) {
     let body = {
       username: "username nya salah" ,
@@ -67,7 +67,7 @@ describe('POST /users/login', function() {
     }
 
     request(app)
-    .post('/users/login')
+    .post('/login')
     .send(body)
     .end((err, res) => {
       if(err){
@@ -84,7 +84,7 @@ describe('POST /users/login', function() {
 });
 
 //===================== error test no username n pass  =========================
-describe('POST /users/login', function() {
+describe('POST /login', function() {
   it('return status 400 and error msg', function(done) {
     let body = {
       username: "" ,
@@ -92,7 +92,7 @@ describe('POST /users/login', function() {
     }
 
     request(app)
-    .post('/users/login')
+    .post('/login')
     .send(body)
     .end((err, res) => {
       if(err){
