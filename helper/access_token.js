@@ -1,11 +1,12 @@
-let jwt = require('jsonwebtoken');
 
-function newToken(payload){
-  return jwt.sign(payload, process.env.secretKey);
+let jwt = require("jsonwebtoken");
+
+function newToken(payload) {
+    return jwt.sign(payload, process.env.SECRET);
 }
 
-function verifyToken(token){
-  return jwt.verify(token, process.env.secretKey);
+function verifyToken(token) {
+    return jwt.verify(token, process.env.SECRET);
 }
 
-module.exports = { newToken, verifyToken }
+module.exports = { newToken, verifyToken };

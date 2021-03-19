@@ -11,10 +11,19 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Field.belongsToMany(models.Plant, { through: "PlantFields", foreignKey: 'fieldId' });
     }
   };
   Field.init({
-    fieldName: DataTypes.STRING
+    fieldName: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: 'Field name is required.'
+        }
+      }
+    }
   }, {
     sequelize,
     modelName: 'Field',
