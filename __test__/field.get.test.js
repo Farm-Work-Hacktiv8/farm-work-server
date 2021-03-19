@@ -1,6 +1,6 @@
 const app = require("../app");
 const request = require("supertest");
-const { User } = require("../models");
+const { sequelize, User } = require("../models");
 const { clearDBField } = require("../helper/clearDB");
 const { newToken } = require("../helper/access_token");
 
@@ -39,6 +39,7 @@ beforeAll((done) => {
 afterAll((done) => {
     clearDBField()
         .then((data) => {
+            sequelize.close()
             done();
         })
         .catch((err) => {
@@ -53,8 +54,8 @@ describe("GET /fields", () => {
             .get("/fields")
             .set("access_token", token)
             .end((err, res) => {
-                err ? done(err) : expect(res.statusCode).toEqual(200);
-                expect(typeof res.body).toEqual("object");
+                err ? done(err) : expect(res.status).toEqual(200);
+                expect(typeof res.body).toEqual("array");
                 done();
             });
     });
@@ -63,7 +64,7 @@ describe("GET /fields", () => {
     it("should send response with 403 status code", function (done) {
         request(app)
             .get(`/fields`)
-            .set("access_token", token2)
+            .set("access_token", token)
             .end(function (err, res) {
                 err ? done(err) : 
                 
