@@ -12,6 +12,7 @@ let authenticate = (req, res, next) => {
       }
     })
     .then(data => {
+
       if(!data) throw({name: 'custom', msg: 'Please login first.', status: 403})
       req.dataUser = decode
       next()

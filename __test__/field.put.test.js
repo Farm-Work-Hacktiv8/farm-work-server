@@ -13,7 +13,9 @@ const user = {
 };
 
 const field = {
-    fieldName: 'kebun jeruk'
+    fieldName: 'kebun jeruk',
+    fieldArea: 100,
+    userId: 1
 }
 
 let token;
@@ -33,15 +35,16 @@ beforeAll((done) => {
                 firstName: data.firstName,
                 lastName: data.lastName,
             };
+            id = data.id
+            console.log(id, "<<< id dari balikan find one >>");
             token = newToken(payload);
             return Field.create(field)
         })
         .then((data) => {
-            id = data.id
             done();
         })
         .catch((err) => {
-            console.log(err);
+            done(err);
         });
 });
 
@@ -54,7 +57,7 @@ afterAll((done) => {
             done();
         })
         .catch((err) => {
-            console.log(err);
+            done(err);
         });
 });
 
@@ -63,6 +66,7 @@ describe("PUT /fields/:id", () => {
     it("should send response with 200 status code", (done) => {
         const body = {
             fieldName: "jeruk",
+            fieldArea: 100,
         };
 
         request(app)
@@ -72,8 +76,10 @@ describe("PUT /fields/:id", () => {
             .end((err, res) => {
                 err ? done(err) : expect(res.statusCode).toEqual(200);
                 expect(typeof res.body).toEqual("object");
-                expect(res.body).toHaveProperty("message");
-                expect(typeof res.body.message).toEqual("string");
+                expect(res.body).toHaveProperty("fieldName");
+                expect(res.body).toHaveProperty("fieldArea");
+                expect(typeof res.body.fieldName).toEqual("string");
+                expect(typeof res.body.fieldArea).toEqual("number");
 
                 done();
             });
@@ -83,25 +89,50 @@ describe("PUT /fields/:id", () => {
     it("should send response with 400 status code", (done) => {
         const body = {
             fieldName: "",
+            fieldArea: 100,
         };
 
         request(app)
             .put(`/fields/${id}`)
-            .set("access_token", token2)
+            .set("access_token", token)
             .send(body)
             .end((err, res) => {
                 err ? done(err) : expect(res.statusCode).toEqual(400);
                 expect(typeof res.body).toEqual("object");
                 expect(res.body).toHaveProperty("error");
-                expect(Array.isArray(res.body.error)).toEqual(true);
-                expect(res.body.error).toEqual(
-                    expect.arrayContaining(["Field name is required."])
-                );
+                expect(typeof res.body.error).toEqual("string");
+                expect(res.body.error).toEqual("Field name is required.");
+
+                done()
+            });
+    });
+
+    // Test Case : fail - not inputed fieldArea
+    it("should send response with 400 status code", (done) => {
+        const body = {
+            fieldName: "Kebon Jeruk",
+            fieldArea: 0,
+        };
+
+        request(app)
+            .put(`/fields/${id}`)
+            .set("access_token", token)
+            .send(body)
+            .end((err, res) => {
+                err ? done(err) : 
+                
+                expect(res.statusCode).toEqual(400);
+                expect(typeof res.body).toEqual("object");
+                expect(res.body).toHaveProperty("error");
+                expect(typeof res.body.error).toEqual("string");
+                expect(res.body.error).toEqual("Field area should be greater than 1 meter.");
+
+                done()
             });
     });
 
     // Test Case : fail - dont have permission (wrong access token)
-    it("should send response with 403 status code", function (done) {
+    it("should send response with 403 status code", (done) => {
         request(app)
             .put(`/fields/${id}`)
             .set("access_token", token2)
@@ -110,7 +141,7 @@ describe("PUT /fields/:id", () => {
                 expect(typeof res.body).toEqual("object");
                 expect(res.body).toHaveProperty("error");
                 expect(typeof res.body.error).toEqual("string");
-                expect(res.body.error).toEqual("Please login first");
+                expect(res.body.error).toEqual("Please login first.");
                 done();
             });
     });

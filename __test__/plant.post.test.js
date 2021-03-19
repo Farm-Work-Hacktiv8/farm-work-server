@@ -92,6 +92,7 @@ describe('POST /plants', () => {
 
                     done();
                 });
+
     });
 
     // Test Case : fail - harvestTime inposted less than 1 day
@@ -116,6 +117,7 @@ describe('POST /plants', () => {
                     done();
                 });
     });
+
 
     // Test Case: fail - dont have permission (wrong access token)
     it("should send response with 403 status code", (done) => {

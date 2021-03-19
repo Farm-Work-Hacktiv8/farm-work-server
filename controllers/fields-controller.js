@@ -14,9 +14,10 @@ class FieldController {
   static addFields(req, res, next) {
     let newInputField = {
       fieldName: req.body.fieldName,
-      fieldArea: req.body.fieldArea
+      fieldArea: req.body.fieldArea,
+      userId: req.dataUser.id
     }
-
+    
     Field.create(newInputField)
       .then(newDataField => {
         res.status(201).json(newDataField)
@@ -47,7 +48,7 @@ class FieldController {
         })
       })
       .then(newDataField => {
-        res.status(201).json(newDataField)
+        res.status(200).json(newUpdateField);
       })
       .catch(err => {
         next(err)
@@ -63,7 +64,7 @@ class FieldController {
     .then(field => {
       if(!field) throw ({name: 'custom', status: 400, msg: "Invalid Field"})
 
-      return Field.delete({
+      return Field.destroy({
         where: {
           id: req.params.id
         }
