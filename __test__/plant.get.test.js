@@ -4,15 +4,15 @@ const { User, sequelize } = require("../models");
 const { clearDBPlant, clearDBUser } = require("../helper/clearDB");
 const { newToken } = require("../helper/access_token");
 
-const user = {
-    firstName: "Wahyu",
-    lastName: "Danang",
-    email: "danang123@gmail.com",
-    username: "wahyudanang",
-    password: "123456",
-};
-
 let token;
+
+const user = {
+    firstName: "Wahyu6",
+    lastName: "Danang6",
+    email: "danang1236@gmail.com",
+    username: "wahyudanang6",
+    password: "1234566",
+};
 
 beforeAll((done) => {
     User.create(user)

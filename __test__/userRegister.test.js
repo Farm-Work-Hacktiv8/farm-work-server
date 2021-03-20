@@ -52,11 +52,11 @@ describe('POST /register', function() {
 describe('POST /register', function() {
   it('user register no firstName return status 201 and firstName, lastName, email, username', function(done) {
     let body = {
-      firstName: 'Wahyu',
+      firstName: 'Wahyu11',
       lastName: '',
-      email: 'danang123@gmail.com',
-      username: 'wahyudanang',
-      password: '123456'
+      email: 'danang12311@gmail.com',
+      username: 'wahyudanang11',
+      password: '12345611'
     }
 
     request(app)
@@ -90,10 +90,10 @@ describe('POST /register', function() {
   it('user register no firstName return status 400 and error message', function(done) {
     let body = {
       firstName: "" ,
-      lastName: "Santoso" ,
-      email: "budi@mail.com" ,
-      username: "wahyudanang2" ,
-      password: "123456"
+      lastName: "Santoso12" ,
+      email: "budi12@mail.com" ,
+      username: "wahyudanang212" ,
+      password: "12345612"
     }
 
     request(app)
@@ -118,10 +118,10 @@ describe('POST /register', function() {
 describe('POST /register', function() {
   it('user register no Email return status 400 and error message', function(done) {
     let body = {
-      firstName: "Budi" ,
-      lastName: "Santoso" ,
+      firstName: "Budi13" ,
+      lastName: "Santoso13" ,
       email: "" ,
-      username: "wahyudanang3" ,
+      username: "wahyudanang331" ,
       password: "123456"
     }
 
@@ -147,11 +147,11 @@ describe('POST /register', function() {
 describe('POST /register', function() {
   it('user register with invalid email format return status 400 and error message', function(done) {
     let body = {
-      firstName: "Budi" ,
-      lastName: "Santoso" ,
-      email: "budiaja" ,
-      username: "wahyudanang4" ,
-      password: "123456"
+      firstName: "Budi14" ,
+      lastName: "Santoso14" ,
+      email: "budiaja14" ,
+      username: "wahyudanang414" ,
+      password: "12345614"
     }
 
     request(app)
@@ -176,11 +176,11 @@ describe('POST /register', function() {
 describe('POST /register', function() {
   it('user register no Username return status 400 and error message', function(done) {
     let body = {
-      firstName: "Budi" ,
-      lastName: "Santoso" ,
-      email: "budi@mail.com" ,
+      firstName: "Budi15" ,
+      lastName: "Santoso15" ,
+      email: "budi15@mail.com" ,
       username: "" ,
-      password: "123456"
+      password: "12345615"
     }
 
     request(app)
@@ -205,11 +205,11 @@ describe('POST /register', function() {
 describe('POST /register', function() {
   it('user register Username < 4 return status 400 and error message', function(done) {
     let body = {
-      firstName: "Budi" ,
-      lastName: "Santoso" ,
-      email: "budi@mail.com" ,
-      username: "bud" ,
-      password: "123456"
+      firstName: "Budi16" ,
+      lastName: "Santoso16" ,
+      email: "budi16@mail.com" ,
+      username: "b16" ,
+      password: "12345616"
     }
 
     request(app)
@@ -234,12 +234,12 @@ describe('POST /register', function() {
 describe('POST /register', function() {
   it('user register with same Username return status 400 and error message', function(done) {
     let body = {
-      firstName: "Budi" ,
-      lastName: "Santoso" ,
-      email: "budi@mail.com" ,
-      username: "budi1234" ,
-      password: "123456"
-    }
+        firstName: "Budi17",
+        lastName: "Santoso17",
+        email: "budi17@mail.com",
+        username: "budi1234",
+        password: "12345617",
+    };
 
     request(app)
     .post('/register')
@@ -263,10 +263,10 @@ describe('POST /register', function() {
 describe('POST /register', function() {
   it('user register no Password return status 400 and error message', function(done) {
     let body = {
-      firstName: "Budi" ,
-      lastName: "Santoso" ,
-      email: "budi@mail.com" ,
-      username: "wahyudanang5" ,
+      firstName: "Budi18" ,
+      lastName: "Santoso18" ,
+      email: "budi18@mail.com" ,
+      username: "wahyudanang519" ,
       password: ""
     }
 
@@ -292,10 +292,10 @@ describe('POST /register', function() {
 describe('POST /register', function() {
   it('user register Password < 6 return status 400 and error message', function(done) {
     let body = {
-      firstName: "Budi" ,
-      lastName: "Santoso" ,
-      email: "budi@mail.com" ,
-      username: "wahyudanang5" ,
+      firstName: "Budi21" ,
+      lastName: "Santoso12" ,
+      email: "budi12@mail.com" ,
+      username: "wahyudanang521" ,
       password: "1234"
     }
 

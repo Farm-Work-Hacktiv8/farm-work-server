@@ -4,16 +4,16 @@ const { User, sequelize } = require('../models')
 const { clearDBPlant, clearDBUser } = require("../helper/clearDB");
 const { newToken } = require('../helper/access_token')
 
-const user = {
-    firstName: 'Wahyu',
-    lastName: 'Danang',
-    email: 'danang123@gmail.com',
-    username: 'wahyudanang',
-    password: '123456',
-}
+let token;
+let token2 = "";
 
-let token
-let token2 = ''
+const user = {
+    firstName: 'Wahyu7',
+    lastName: 'Danang7',
+    email: 'danang123700@gmail.com',
+    username: 'wahyudanang700',
+    password: '1234567',
+}
 
 beforeAll((done) => {
     User.create(user)
@@ -25,7 +25,6 @@ beforeAll((done) => {
                 email: data.email,
                 username: data.username,
             }
-
             token = newToken(payload)
             done()
         })
@@ -51,7 +50,7 @@ describe('POST /plants', () => {
     it("should send response with 201 status code", (done) => {
         const body = {
             plantName: "Mangga",
-            harvestTime: 29,
+            harvestTime: 2
         };
 
         request(app)
@@ -75,7 +74,7 @@ describe('POST /plants', () => {
     it("should send response with 400 status code", (done) => {
             const body = {
                 plantName: "",
-                harvestTime: 30,
+                harvestTime: 30
             };
 
             request(app)
@@ -99,7 +98,7 @@ describe('POST /plants', () => {
     it("should send response with 400 status code", (done) => {
             const body = {
                 plantName: "Mangga",
-                harvestTime: 0,
+                harvestTime: 0
             };
 
             request(app)
@@ -124,6 +123,7 @@ describe('POST /plants', () => {
         const body = {
             plantName: "Mangga",
             harvestTime: 10,
+            userId: 900
         };
 
         request(app)
