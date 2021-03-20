@@ -4,16 +4,17 @@ const { User } = require("../models");
 const { clearDBField, clearDBUser } = require("../helper/clearDB");
 const { newToken } = require("../helper/access_token");
 
-const user = {
-    firstName: 'Wahyu',
-    lastName: 'Danang',
-    email: 'danang123@gmail.com',
-    username: 'wahyudanang',
-    password: '123456'
-}
-
 let token
 let token2 = ''
+
+const user = {
+    firstName: 'Wahyu3',
+    lastName: 'Danang3',
+    email: 'danang1233@gmail.com',
+    username: 'wahyudanang3',
+    password: '1234563'
+}
+
 
 beforeAll((done)=> {
     User.create(user)
@@ -99,7 +100,7 @@ describe( 'POST /fields', () => {
             });
     });
 
-    // Test Case  : fail - fieldName not inputed
+    // Test Case  : fail - fieldAre must be greater than 1
     it("should send response with 400 status code", (done) => {
         const body = {
             fieldName: "Kebon jeruk",

@@ -4,27 +4,29 @@ const { User, Field } = require("../models");
 const { clearDBField, clearDBUser } = require("../helper/clearDB");
 const { newToken } = require("../helper/access_token");
 
+let token;
+let token2 = "";
+let id;
+
 const user = {
-    firstName: "Wahyu",
-    lastName: "Danang",
-    email: "danang123@gmail.com",
-    username: "wahyudanang",
-    password: "123456",
+    firstName: "Wahyu4",
+    lastName: "Danang4",
+    email: "danang123400@gmail.com",
+    username: "wahyudanang400",
+    password: "1234564",
 };
 
 const field = {
     fieldName: 'kebun jeruk',
     fieldArea: 100,
-    userId: 1
+    userId: id
 }
 
-let token;
-let token2 = "";
-let id;
 
 beforeAll((done) => {
     User.create(user)
         .then((data) => {
+            console.log(data, "<< hasil create user di put field");
             return User.findOne({ where: { username: user.username } });
         })
         .then((data) => {
@@ -35,12 +37,14 @@ beforeAll((done) => {
                 firstName: data.firstName,
                 lastName: data.lastName,
             };
-            id = data.id
-            console.log(id, "<<< id dari balikan find one >>");
+            console.log(data, "<<<<< hasil create user");
             token = newToken(payload);
+            console.log(token, "<<< access token >>>>");
             return Field.create(field)
         })
         .then((data) => {
+            console.log(data, "<<< data hasil create field i put field");
+            id = data.id
             done();
         })
         .catch((err) => {

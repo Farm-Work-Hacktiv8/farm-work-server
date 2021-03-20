@@ -4,13 +4,16 @@ const { sequelize, User, Field } = require("../models");
 const { clearDBField } = require("../helper/clearDB");
 const { newToken } = require("../helper/access_token");
 
+let token;
+let token2 = "";
 let id
+
 const user = {
-    firstName: "Wahyu",
-    lastName: "Danang",
-    email: "danang123@gmail.com",
-    username: "wahyudanang",
-    password: "123456",
+    firstName: "Wahyu2",
+    lastName: "Danang2",
+    email: "danang1232@gmail.com",
+    username: "wahyudanang2",
+    password: "1234562",
 };
 
 const field = {
@@ -18,9 +21,6 @@ const field = {
     fieldArea: 100,
     userId: id
 }
-
-let token;
-let token2 =''
 
 beforeAll((done) => {
     User.create(user)

@@ -5,8 +5,8 @@ const {sequelize, User} = require('../models')
 const user = {
   firstName: 'Wahyu',
   lastName: 'Danang',
-  email: 'danang123@gmail.com',
-  username: 'wahyudanang',
+  email: 'danang123100@gmail.com',
+  username: 'wahyudanang100',
   password: '123456'
 }
 
@@ -35,9 +35,9 @@ afterAll((done) => {
 describe('POST /login', function() {
   it('user login return status 200 and access_token', function(done) {
     let body = {
-      username: "wahyudanang",
-      password: "123456"
-    }
+        username: "wahyudanang100",
+        password: "123456",
+    };
 
     request(app)
     .post('/login')

@@ -4,12 +4,16 @@ const { User, Plant, sequelize } = require("../models");
 const { clearDBPlant, clearDBUser } = require("../helper/clearDB");
 const { newToken } = require("../helper/access_token");
 
+let token;
+let token2 = "";
+let id;
+
 const user = {
-    firstName: "Wahyu",
-    lastName: "Danang",
-    email: "danang123@gmail.com",
-    username: "wahyudanang",
-    password: "123456",
+    firstName: "Wahyu8",
+    lastName: "Danang8",
+    email: "danang1238@gmail.com",
+    username: "wahyudanang8",
+    password: "1234568",
 };
 
 const plant = {
@@ -17,9 +21,6 @@ const plant = {
     harvestTime: 20
 }
 
-let token;
-let token2 = "";
-let id;
 
 beforeAll((done) => {
     User.create(user)
@@ -39,6 +40,7 @@ beforeAll((done) => {
         })
         .then((data) => {
             id = data.id
+            console.log(id, "<< field id >>>");
             done();
         })
         .catch((err) => {

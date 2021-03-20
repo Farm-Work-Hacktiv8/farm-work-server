@@ -9,11 +9,11 @@ let token2 = "";
 let id;
 
 const user = {
-    firstName: "Wahyu",
-    lastName: "Danang",
-    email: "danang123@gmail.com",
-    username: "wahyudanang",
-    password: "123456",
+    firstName: "Wahyu5",
+    lastName: "Danang5",
+    email: "danang1235@gmail.com",
+    username: "wahyudanang5",
+    password: "1234565",
 };
 
 const field = {
