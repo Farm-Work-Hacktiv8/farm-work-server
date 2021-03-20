@@ -25,8 +25,8 @@ Fields
 
 Plants
 
-- GET/plants
-- POST/plants
-- PUT/plants/:id
-- DELETE/plants/:id
+- GET/plants/:fieldId
+- POST/plants/:fieldId
+- PUT/plants/:fieldId/:plantId
+- DELETE/plants/:fieldId/:plantId
  */

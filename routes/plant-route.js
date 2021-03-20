@@ -1,12 +1,13 @@
 const router = require('express').Router()
 const Controller = require('../controllers/plant-controller')
+const {authorizePlant, authorizeField} = require('../middleware/authorize')
 
-router.get('/', Controller.fetchPlant)
+router.get('/:fieldId', authorizeField, Controller.fetchPlant)
 
-router.post('/', Controller.createPlant)
+router.post('/:fieldId', authorizeField, Controller.createPlant)
 
-router.put('/:id', Controller.editPlant)
+router.put('/:fieldId/:plantId', authorizePlant, Controller.editPlant)
 
-router.delete('/:id', Controller.destroyPlant)
+router.delete('/:fieldId/:plantId', authorizePlant, Controller.destroyPlant)
 
 module.exports = router
