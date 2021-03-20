@@ -6,7 +6,8 @@ const { newToken } = require("../helper/access_token");
 
 let token;
 let token2 = "";
-let id;
+let userId
+let fieldId
 
 const user = {
     firstName: "Wahyu4",
@@ -19,7 +20,7 @@ const user = {
 const field = {
     fieldName: 'kebun jeruk',
     fieldArea: 100,
-    userId: id
+    userId
 }
 
 
@@ -37,14 +38,12 @@ beforeAll((done) => {
                 firstName: data.firstName,
                 lastName: data.lastName,
             };
-            console.log(data, "<<<<< hasil create user");
+            userId = data.id
             token = newToken(payload);
-            console.log(token, "<<< access token >>>>");
             return Field.create(field)
         })
         .then((data) => {
-            console.log(data, "<<< data hasil create field i put field");
-            id = data.id
+            fieldId = data.id
             done();
         })
         .catch((err) => {
@@ -53,9 +52,9 @@ beforeAll((done) => {
 });
 
 afterAll((done) => {
-    clearDBField()
+    clearDBField({id: fieldId})
         .then(() => {
-            return clearDBUser()
+            return clearDBUser({id: userId})
         })
         .then((data) => {
             done();
@@ -74,7 +73,7 @@ describe("PUT /fields/:id", () => {
         };
 
         request(app)
-            .put(`/fields/${id}`)
+            .put(`/fields/${fieldId}`)
             .set("access_token", token)
             .send(body)
             .end((err, res) => {
@@ -97,7 +96,7 @@ describe("PUT /fields/:id", () => {
         };
 
         request(app)
-            .put(`/fields/${id}`)
+            .put(`/fields/${fieldId}`)
             .set("access_token", token)
             .send(body)
             .end((err, res) => {
@@ -119,7 +118,7 @@ describe("PUT /fields/:id", () => {
         };
 
         request(app)
-            .put(`/fields/${id}`)
+            .put(`/fields/${fieldId}`)
             .set("access_token", token)
             .send(body)
             .end((err, res) => {
@@ -138,7 +137,7 @@ describe("PUT /fields/:id", () => {
     // Test Case : fail - dont have permission (wrong access token)
     it("should send response with 403 status code", (done) => {
         request(app)
-            .put(`/fields/${id}`)
+            .put(`/fields/${fieldId}`)
             .set("access_token", token2)
             .end(function (err, res) {
                 err ? done(err) : expect(res.statusCode).toEqual(403);

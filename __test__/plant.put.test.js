@@ -1,12 +1,15 @@
 const app = require("../app");
 const request = require("supertest");
-const { User, Plant, sequelize } = require("../models");
-const { clearDBPlant, clearDBUser } = require("../helper/clearDB");
+const { User, Plant, sequelize, Field, PlantField } = require("../models");
+const { clearDBPlant, clearDBUser, clearDBField, clearDBPlantField } = require("../helper/clearDB");
 const { newToken } = require("../helper/access_token");
 
 let token;
 let token2 = "";
-let id;
+let userId
+let fieldId
+let plantId;
+let PFId;
 
 const user = {
     firstName: "Wahyu8",
@@ -19,6 +22,12 @@ const user = {
 const plant = {
     plantName: 'Mangga',
     harvestTime: 20
+}
+
+const field = {
+    fieldName: 'kebon jagong',
+    fieldArea: 100,
+    userId: userId
 }
 
 
@@ -35,12 +44,23 @@ beforeAll((done) => {
                 firstName: data.firstName,
                 lastName: data.lastName,
             };
+            userId = data.id
             token = newToken(payload);
+            return Field.create(field)
+        })
+        .then((fieldResult) => {
+            fieldId = fieldResult.id
+            console.log(fieldId, "<<< id field");
             return Plant.create(plant)
         })
+        .then((plant) => {
+            plantId = plant.id;
+            console.log(plantId, "<< plant id >>>");
+            return PlantField.create({fieldId, plantId})
+        })
         .then((data) => {
-            id = data.id
-            console.log(id, "<< field id >>>");
+            PFId = data.id
+            console.log(data, "<<< hasil create plant field coyy");
             done();
         })
         .catch((err) => {
@@ -49,16 +69,22 @@ beforeAll((done) => {
 });
 
 afterAll((done) => {
-    clearDBPlant()
+    clearDBPlant({ id: plantId })
         .then(() => {
-            return clearDBUser()
+            return clearDBField({ id: fieldId });
         })
-        .then((data) => {
-            sequelize.close()
+        .then(() => {
+            return clearDBPlantField({ id: PFId });
+        })
+        .then(() => {
+            return clearDBUser({ id: userId });
+        })
+        .then(() => {
+            sequelize.close();
             done();
         })
         .catch((err) => {
-            done(err)
+            done(err);
         });
 });
 
@@ -72,7 +98,7 @@ describe("PUT /plants/:id", () => {
         };
 
         request(app)
-            .put(`/plants/${id}`)
+            .put(`/plants/${fieldId}/${plantId}`)
             .set("access_token", token)
             .send(body)
             .end((err, res) => {
@@ -86,7 +112,7 @@ describe("PUT /plants/:id", () => {
                 expect(res.body).toHaveProperty("createdAt");
                 expect(res.body).toHaveProperty("updatedAt");
 
-                expect(res.body.id).toEqual(id)
+                expect(res.body.id).toEqual(plantId)
                 expect(res.body.plantName).toEqual(res.body.plantName)
                 expect(res.body.harvestTime).toEqual(res.body.harvestTime)
                 expect(typeof res.body.createdAt).toEqual("string")
@@ -104,7 +130,7 @@ describe("PUT /plants/:id", () => {
         };
 
         request(app)
-            .put(`/plants/${id}`)
+            .put(`/plants/${fieldId}/${plantId}`)
             .set("access_token", token)
             .send(body)
             .end((err, res) => {
@@ -126,7 +152,7 @@ describe("PUT /plants/:id", () => {
         };
 
         request(app)
-            .put(`/plants/${id}`)
+            .put(`/plants/${fieldId}/${plantId}`)
             .set("access_token", token)
             .send(body)
             .end((err, res) => {
@@ -148,7 +174,7 @@ describe("PUT /plants/:id", () => {
         };
 
         request(app)
-            .put(`/plants/${id}`)
+            .put(`/plants/${fieldId}/${plantId}`)
             .set("access_token", token2)
             .send(body)
             .end((err, res) => {

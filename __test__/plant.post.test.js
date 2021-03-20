@@ -7,6 +7,7 @@ const { newToken } = require('../helper/access_token')
 let token;
 let token2 = "";
 let fieldId
+let userId
 
 const user = {
     firstName: 'Wahyu7',
@@ -26,11 +27,12 @@ beforeAll((done) => {
                 email: data.email,
                 username: data.username,
             }
+            userId = data.id
             token = newToken(payload)
             return Field.create({
                 fieldName: 'kebon jukut',
                 fieldArea: 100,
-                userId: data.id
+                userId
             })
         })
         .then(data => {
@@ -43,17 +45,22 @@ beforeAll((done) => {
 })
 
 afterAll((done) => {
-    clearDBPlant()
+    // clearDBPlant({ })
+        // .then(() => {
+        //     return clearDBField({ id: fieldId });
+        // })
+    clearDBField({ id: fieldId })
         .then(() => {
-            clearDBUser();
-            clearDBField()
-            sequelize.close()
+            return clearDBUser({ id: userId });
+        })
+        .then(() => {
+            sequelize.close();
             done();
         })
         .catch((err) => {
-            console.log(err);
+            done(err);
         });
-})
+});
 
 describe('POST /plants/:fieldId', () => {
     // Test Case : Success
