@@ -6,7 +6,8 @@ const { newToken } = require("../helper/access_token");
 
 let token
 let token2 = ''
-let id
+let userId
+let fieldId
 
 const user = {
     firstName: "Wahyu",
@@ -19,7 +20,7 @@ const user = {
 const field = {
     fieldName: "kebon jukut",
     fieldArea: 100,
-    userId: id
+    userId
 };
 
 beforeAll((done) => {
@@ -35,11 +36,12 @@ beforeAll((done) => {
                 firstName: data.firstName,
                 lastName: data.lastName,
             };
+            userId = data.id
             token = newToken(payload);
             return Field.create(field)
         })
         .then((data)=> {
-            id = data.id
+            fieldId = data.id
             done();
         })
         .catch((err) => {
@@ -48,15 +50,15 @@ beforeAll((done) => {
 });
 
 afterAll((done) => {
-    clearDBField()
+    clearDBField({id: fieldId})
         .then(() => {
-            return clearDBUser();
+            return clearDBUser({id: userId})
         })
         .then((data) => {
             done();
         })
         .catch((err) => {
-            console.log(err);
+            done(err);
         });
 });
 
@@ -65,7 +67,7 @@ describe("DELETE /fields/:id", () => {
     it("should send response with 200 status code", (done) => {
 
         request(app)
-            .delete(`/fields/${id}`)
+            .delete(`/fields/${fieldId}`)
             .set("access_token", token)
             .end((err, res) => {
                 err? done(err) :
@@ -82,7 +84,7 @@ describe("DELETE /fields/:id", () => {
     it("should send response with 403 status code", (done) => {
  
         request(app)
-            .delete(`/fields/${id}`)
+            .delete(`/fields/${fieldId}`)
             .set("access_token", token2)
             .end((err, res) => {
                 err? done(err) :

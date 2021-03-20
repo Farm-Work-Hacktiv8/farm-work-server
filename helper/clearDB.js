@@ -1,25 +1,32 @@
-const { User, Field, Plant } = require("../models/index");
+const { User, Field, Plant, PlantField } = require("../models/index");
 
-function clearDBField() {
+function clearDBField(payload) {
     if (process.env.NODE_ENV === "test") {
-        return Field.destroy({ where: {} });
+        return Field.destroy({ where: payload });
     }
 }
 
-function clearDBPlant() {
+function clearDBPlant(payload) {
     if (process.env.NODE_ENV === "test") {
-        return Plant.destroy({ where: {} });
+        return Plant.destroy({ where: payload });
     }
 }
 
-function clearDBUser() {
+function clearDBPlantField(payload) {
     if (process.env.NODE_ENV === "test") {
-        return User.destroy({ where: {} });
+        return PlantField.destroy({ where: payload });
+    }
+}
+
+function clearDBUser(payload) {
+    if (process.env.NODE_ENV === "test") {
+        return User.destroy({ where: payload });
     }
 }
 
 module.exports = {
     clearDBField,
     clearDBUser,
-    clearDBPlant
+    clearDBPlant,
+    clearDBPlantField,
 };

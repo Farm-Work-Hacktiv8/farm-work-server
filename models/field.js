@@ -37,13 +37,7 @@ module.exports = (sequelize, DataTypes) => {
               },
           },
           userId: {
-              type: DataTypes.STRING,
-              validate: {
-                  notEmpty: {
-                      args: true,
-                      msg: "Field must have its owner.",
-                  },
-              },
+              type: DataTypes.STRING
           },
       },
       {

@@ -25,11 +25,12 @@ const authorizeField = (req, res, next) => {
 const authorizePlant = (req, res, next) => {
   PlantField.findOne({
     where: {
-      fieldId: req.params.fieldId
+      fieldId: req.params.fieldId,
+      plantId: req.params.plantId
     }
   })
-    .then(field => {
-      if(field.plantId !== req.params.plantId){
+  .then(field => {
+      if(!field){
         throw({name: 'custom', status: 401, msg: 'Not Authorized'})
       }
       next()

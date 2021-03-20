@@ -43,7 +43,6 @@ class PlantController {
 
     Plant.update({plantName, harvestTime}, {where : {id: plantId}, returning: true})
     .then((plant) => {
-      console.log(plant, "<<<< plant hasil put");
       res.status(200).json(plant[1][0])
     })
     .catch((err) => {

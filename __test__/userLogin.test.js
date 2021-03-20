@@ -2,6 +2,7 @@ const request = require('supertest');
 const app = require("../app")
 const {sequelize, User} = require('../models')
 
+let userId 
 const user = {
   firstName: 'Wahyu',
   lastName: 'Danang',
@@ -13,6 +14,7 @@ const user = {
 beforeAll((done)=> {
   User.create(user)
   .then(data => {
+    userId = data.id
     done()
   })
   .catch( err => {

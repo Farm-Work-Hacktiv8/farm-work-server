@@ -1,12 +1,13 @@
 const app = require("../app");
 const request = require("supertest");
 const { sequelize, User, Field } = require("../models");
-const { clearDBField } = require("../helper/clearDB");
+const { clearDBField, clearDBUser } = require("../helper/clearDB");
 const { newToken } = require("../helper/access_token");
 
 let token;
 let token2 = "";
-let id
+let userId
+let fieldId
 
 const user = {
     firstName: "Wahyu2",
@@ -19,7 +20,7 @@ const user = {
 const field = {
     fieldName: 'kebon jukut',
     fieldArea: 100,
-    userId: id
+    userId
 }
 
 beforeAll((done) => {
@@ -35,11 +36,12 @@ beforeAll((done) => {
                 firstName: data.firstName,
                 lastName: data.lastName,
             };
-            id = data.id
+            userId = data.id
             token = newToken(payload);
             return Field.create(field)
         })
-        .then(()=>{
+        .then((data)=>{
+            fieldId = data.id
             done()
         })
         .catch((err) => {
@@ -48,14 +50,15 @@ beforeAll((done) => {
 });
 
 afterAll((done) => {
-    clearDBField()
+    clearDBField({id: fieldId})
+        .then(() => {
+            return clearDBUser({id: userId})
+        })
         .then((data) => {
-            sequelize.close()
             done();
         })
         .catch((err) => {
-            console.log(err);
-            done();
+            done(err);
         });
 });
 

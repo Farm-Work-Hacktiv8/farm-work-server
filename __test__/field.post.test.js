@@ -6,6 +6,8 @@ const { newToken } = require("../helper/access_token");
 
 let token
 let token2 = ''
+let userId
+let fiedId
 
 const user = {
     firstName: 'Wahyu3',
@@ -29,7 +31,7 @@ beforeAll((done)=> {
             firstName: data.firstName,
             lastName: data.lastName
         }
-
+        userId = data.id
         token = newToken(payload);
         done()
     })
@@ -39,9 +41,9 @@ beforeAll((done)=> {
 })
 
 afterAll((done) => {
-    clearDBField()
+    clearDBField({ })
         .then(() => {
-            return clearDBUser();
+            return clearDBUser({ id: userId });
         })
         .then((data) => {
             done();
@@ -49,7 +51,7 @@ afterAll((done) => {
         .catch((err) => {
             done(err);
         });
-})
+});
 
 describe( 'POST /fields', () => {
     // Test Case 1: Success - post field
@@ -57,7 +59,7 @@ describe( 'POST /fields', () => {
         const body = {
             fieldName: "Kebun Mangga",
             fieldArea: 100,
-            userId: 1,
+            userId
         };
 
         request(app)
