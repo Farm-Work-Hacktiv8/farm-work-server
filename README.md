@@ -77,8 +77,12 @@ PUT - http://localhost:3000/fields/:id
 
 - Response
 {
-  "fieldName": "Kebun Jeruk 2",
-  "fieldArea": "15"
+  "id": 1,
+  "fieldName": "Kebun Jeruk",
+  "fieldArea": 10,
+  "userId": 1,
+  "createdAt": "2021-03-20T04:05:40.486Z",
+  "updatedAt": "2021-03-20T05:23:27.321Z"
 }
 
 - Error

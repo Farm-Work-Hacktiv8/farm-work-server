@@ -44,11 +44,12 @@ class FieldController {
         return Field.update(newUpdateField, {
           where: {
             id: req.params.fieldId
-          }
+          },
+          returning: true
         })
       })
       .then(newDataField => {
-        res.status(200).json(newUpdateField);
+        res.status(200).json(newDataField[1][0]);
       })
       .catch(err => {
         next(err)
