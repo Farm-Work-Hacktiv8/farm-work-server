@@ -1,10 +1,11 @@
 const app = require("../app");
 const request = require("supertest");
-const { User, sequelize } = require("../models");
-const { clearDBPlant, clearDBUser } = require("../helper/clearDB");
+const { User, sequelize, Field } = require("../models");
+const { clearDBPlant, clearDBUser, clearDBField } = require("../helper/clearDB");
 const { newToken } = require("../helper/access_token");
 
 let token;
+let fieldId
 
 const user = {
     firstName: "Wahyu6",
@@ -27,9 +28,17 @@ beforeAll((done) => {
                 firstName: data.firstName,
                 lastName: data.lastName,
             };
-
+            
             token = newToken(payload);
-            done();
+            return Field.create({
+                fieldName: 'kebon jukut',
+                fieldArea: 100,
+                userId: data.id
+            })
+        })
+        .then(data => {
+            fieldId = data.id
+            done()
         })
         .catch((err) => {
             console.log(err);
@@ -40,6 +49,7 @@ afterAll((done) => {
     clearDBPlant()
         .then(() => {
             clearDBUser();
+            clearDBField()
             sequelize.close()
             done();
         })
@@ -48,11 +58,11 @@ afterAll((done) => {
         });
 });
 
-describe("GET /plants", () => {
+describe("GET /plants/:fieldId", () => {
     // Test Case : success- get all plants
     it("should send response with 200 status code", (done) => {
         request(app)
-            .get("/plants")
+            .get(`/plants/${fieldId}`)
             .set("access_token", token)
             .end((err, res) => {
                 err ? done(err) : expect(res.statusCode).toEqual(200);
@@ -64,7 +74,7 @@ describe("GET /plants", () => {
     // Test Case: fail - dont have permission (wrong access token)
     it("should send response with 403 status code", (done) => {
         request(app)
-            .get(`/plants`)
+            .get(`/plants/${fieldId}`)
             .set("access_token", "wrong token")
             .end((err, res) => {
                 err ? done(err) : 
