@@ -1,11 +1,12 @@
 const app = require('../app')
 const request = require('supertest')
-const { User, sequelize } = require('../models')
-const { clearDBPlant, clearDBUser } = require("../helper/clearDB");
+const { User, sequelize, Field } = require('../models')
+const { clearDBPlant, clearDBUser, clearDBField } = require("../helper/clearDB");
 const { newToken } = require('../helper/access_token')
 
 let token;
 let token2 = "";
+let fieldId
 
 const user = {
     firstName: 'Wahyu7',
@@ -26,6 +27,14 @@ beforeAll((done) => {
                 username: data.username,
             }
             token = newToken(payload)
+            return Field.create({
+                fieldName: 'kebon jukut',
+                fieldArea: 100,
+                userId: data.id
+            })
+        })
+        .then(data => {
+            fieldId = data.id
             done()
         })
         .catch((err) => {
@@ -37,6 +46,7 @@ afterAll((done) => {
     clearDBPlant()
         .then(() => {
             clearDBUser();
+            clearDBField()
             sequelize.close()
             done();
         })
@@ -45,7 +55,7 @@ afterAll((done) => {
         });
 })
 
-describe('POST /plants', () => {
+describe('POST /plants/:fieldId', () => {
     // Test Case : Success
     it("should send response with 201 status code", (done) => {
         const body = {
@@ -54,7 +64,7 @@ describe('POST /plants', () => {
         };
 
         request(app)
-            .post("/plants")
+            .post(`/plants/${fieldId}`)
             .set("access_token", token)
             .send(body)
             .end((err, res) => {
@@ -78,7 +88,7 @@ describe('POST /plants', () => {
             };
 
             request(app)
-                .post("/plants")
+                .post(`/plants/${fieldId}`)
                 .set("access_token", token)
                 .send(body)
                 .end((err, res) => {
@@ -102,7 +112,7 @@ describe('POST /plants', () => {
             };
 
             request(app)
-                .post("/plants")
+                .post(`/plants/${fieldId}`)
                 .set("access_token", token)
                 .send(body)
                 .end((err, res) => {
@@ -127,7 +137,7 @@ describe('POST /plants', () => {
         };
 
         request(app)
-            .post(`/plants`)
+            .post(`/plants/${fieldId}`)
             .set("access_token", token2)
             .send(body)
             .end((err, res) => {
