@@ -1,12 +1,13 @@
 const router = require('express').Router()
 const FieldController = require('../controllers/fields-controller')
+const {authorizeField} = require('../middleware/authorize')
 
-router.get('/', FieldController.getFields)
+router.get('/', authorizeField, FieldController.getFields)
 
-router.post('/', FieldController.addFields)
+router.post('/', authorizeField, FieldController.addFields)
 
-router.put('/:id', FieldController.updateFields)
+router.put('/:fieldId', authorizeField, FieldController.updateFields)
 
-router.delete('/:id', FieldController.deleteFields)
+router.delete('/:fieldId', authorizeField, FieldController.deleteFields)
 
 module.exports = router

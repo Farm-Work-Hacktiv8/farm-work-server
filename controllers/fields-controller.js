@@ -1,4 +1,4 @@
-const { Field } = require('../models')
+const { Field, Plant } = require('../models')
 
 class FieldController {
   static getFields(req, res, next) {
@@ -35,7 +35,7 @@ class FieldController {
 
     Field.findOne({
       where: {
-        id: req.params.id
+        id: req.params.fieldId
       }
     })
       .then(field => {
@@ -43,7 +43,7 @@ class FieldController {
 
         return Field.update(newUpdateField, {
           where: {
-            id: req.params.id
+            id: req.params.fieldId
           }
         })
       })
@@ -58,7 +58,7 @@ class FieldController {
   static deleteFields(req, res, next) {
     Field.findOne({
       where: {
-        id: req.params.id
+        id: req.params.fieldId
       }
     })
     .then(field => {
@@ -66,7 +66,7 @@ class FieldController {
 
       return Field.destroy({
         where: {
-          id: req.params.id
+          id: req.params.fieldId
         }
       })
     })
