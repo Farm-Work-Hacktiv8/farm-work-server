@@ -11,7 +11,6 @@ class UserController {
       username: req.body.username,
       password: req.body.password,
     }
-
     User.findOne({
       where: {
         username: req.body.username
