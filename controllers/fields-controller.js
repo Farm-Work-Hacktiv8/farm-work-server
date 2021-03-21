@@ -2,7 +2,7 @@ const { Field, Plant } = require('../models')
 
 class FieldController {
   static getFields(req, res, next) {
-    Field.findAll()
+    Field.findAll({where : {userId : req.dataUser.id}})
       .then(fields => {
         res.status(200).json(fields)
       })
