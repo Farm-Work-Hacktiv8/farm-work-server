@@ -29,6 +29,7 @@
   },
   "homepage": "https://github.com/Farm-Work-Hacktiv8/farm-work-server#readme",
   "dependencies": {
+    "antares-http": "^1.0.4",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
