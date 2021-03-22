@@ -74,7 +74,7 @@ describe("GET /fields", () => {
                 
                 expect(res.status).toEqual(200);
                 expect(typeof res.body).toEqual("object");
-                expect(res.body).toHaveProperty('error')
+                expect(res.body).toHaveProperty('id')
                 expect(res.body).toHaveProperty('fieldName')
                 expect(res.body).toHaveProperty('fieldArea')
                 expect(res.body).toHaveProperty('userId')
