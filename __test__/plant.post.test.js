@@ -83,6 +83,8 @@ describe('POST /plants/:fieldId', () => {
                 expect(res.body).toHaveProperty("harvestTime");
                 expect(typeof res.body.plantName).toEqual("string");
                 expect(typeof res.body.harvestTime).toEqual("number");
+                expect(res.body.plantName).toEqual(body.plantName);
+                expect(res.body.harvestTime).toEqual(body.harvestTime);
                 done();
             });
     });

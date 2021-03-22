@@ -75,6 +75,9 @@ describe( 'POST /fields', () => {
                 expect(typeof res.body.fieldName).toEqual("string");
                 expect(typeof res.body.fieldArea).toEqual("number");
                 expect(typeof res.body.userId).toEqual("number");
+                expect(res.body.userId).toEqual(body.userId);
+                expect(res.body.fieldName).toEqual(body.fieldName);
+                expect(res.body.fieldArea).toEqual(body.fieldArea);
                 done();
             });
     });
