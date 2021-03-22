@@ -113,8 +113,8 @@ describe("PUT /plants/:id", () => {
                 expect(res.body).toHaveProperty("updatedAt");
 
                 expect(res.body.id).toEqual(plantId)
-                expect(res.body.plantName).toEqual(res.body.plantName)
-                expect(res.body.harvestTime).toEqual(res.body.harvestTime)
+                expect(res.body.plantName).toEqual(body.plantName)
+                expect(res.body.harvestTime).toEqual(body.harvestTime)
                 expect(typeof res.body.createdAt).toEqual("string")
                 expect(typeof res.body.updatedAt).toEqual("string")
 
@@ -189,6 +189,51 @@ describe("PUT /plants/:id", () => {
                 );
                 
                 done();
+            });
+            
+    });
+
+    // Test Case: fail - empty harvest time
+    it("should send response with 400 status code", (done) => {
+        const body = {
+            plantName: "Jeruk",
+            harvestTime: "",
+        };
+
+        request(app)
+            .put(`/plants/${fieldId}/${plantId}`)
+            .set("access_token", token)
+            .send(body)
+            .end((err, res) => {
+                err ? done(err) : 
+
+                expect(res.statusCode).toEqual(400);
+                expect(typeof res.body).toEqual("object");
+                expect(res.body).toHaveProperty("error");
+                expect(res.body.error).toEqual("Harvest time is required.")
+                done()
+            });
+    });
+
+    // Test Case: fail - update plant in different field
+    it("update plant in different field should send response with 401 status code", (done) => {
+        const body = {
+            plantName: "Jeruk",
+            harvestTime: "28",
+        };
+
+        request(app)
+            .put(`/plants/8/8`)
+            .set("access_token", token)
+            .send(body)
+            .end((err, res) => {
+                err ? done(err) : 
+
+                expect(res.statusCode).toEqual(401);
+                expect(typeof res.body).toEqual("object");
+                expect(res.body).toHaveProperty("error");
+                expect(res.body.error).toEqual("Not Authorized")
+                done()
             });
     });
 

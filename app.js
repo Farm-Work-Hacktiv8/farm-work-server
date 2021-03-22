@@ -12,7 +12,6 @@ app.use(express.json());
 let data 
 app.post('/monitor', function(req, res, next) {
     const response = (JSON.parse(req.body['m2m:sgn']['m2m:nev']['m2m:rep']['m2m:cin'].con))
-    console.log(response, '<<<<')
     data = response
     res.send(response);
 });

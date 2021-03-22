@@ -9,9 +9,6 @@ const authorizeField = (req, res, next) => {
     }
   })
     .then(field => {
-      if(!field){
-        throw({name: 'custom', status: 404, msg: 'Field Not Found'})
-      }
       if(field.userId !== userId){
         throw({name: 'custom', status: 401, msg: 'Not Authorized'})
       }

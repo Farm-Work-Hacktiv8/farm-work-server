@@ -1,6 +1,5 @@
 const router = require('express').Router()
 const FieldController = require('../controllers/fields-controller')
-const {authorizeField} = require('../middleware/authorize')
 
 router.get('/', FieldController.getFields)
 

@@ -90,4 +90,19 @@ describe("GET /plants/:fieldId", () => {
                 done();
             });
     });
+
+    // Test Case: fail - Unauthorized access to people field
+    it("should send response with 403 status code", (done) => {
+        request(app)
+            .get(`/plants/8`)
+            .set("access_token", token)
+            .end((err, res) => {
+                err ? done(err) : 
+                
+                expect(res.statusCode).toEqual(500);
+                expect(typeof res.body).toEqual("object");
+
+                done();
+            });
+    });
 });

@@ -121,4 +121,19 @@ describe("DELETE /plants/:id", () => {
                 done();
             });
     });
+
+    // Test Case : fail - invalid plant ID
+    it("invalid plant ID should send response with 404 status code", (done) => {
+        request(app)
+            .delete(`/plants/${fieldId}/8`)
+            .set("access_token", token)
+            .end(function (err, res) {
+                err ? done(err) : expect(res.statusCode).toEqual(404);
+                expect(typeof res.body).toEqual("object");
+                expect(res.body).toHaveProperty("error");
+                expect(typeof res.body.error).toEqual("string");
+                expect(res.body.error).toEqual("Plant Not Found");
+                done();
+            });
+    });
 });
