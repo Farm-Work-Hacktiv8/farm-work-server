@@ -1,4 +1,4 @@
-const app = require("../app");
+const {app} = require("../app");
 const request = require("supertest");
 const { User, sequelize, Field } = require("../models");
 const { clearDBPlant, clearDBUser, clearDBField } = require("../helper/clearDB");
