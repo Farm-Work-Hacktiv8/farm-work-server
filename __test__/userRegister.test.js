@@ -3,7 +3,7 @@ const {app} = require("../app")
 const {sequelize, User} = require('../models')
 
 afterAll((done) => {
-  User.destroy({where: {} })
+  User.destroy({where: {username: 'budi1234'} })
     .then(() => {
       sequelize.close()
       done()
@@ -50,12 +50,12 @@ describe('POST /register', function() {
 
 //===================== success test REGISTER with no LastName ==========================
 describe('POST /register', function() {
-  it('user register no firstName return status 201 and firstName, lastName, email, username', function(done) {
+  it('user register no LastName return status 201 and firstName, lastName, email, username', function(done) {
     let body = {
       firstName: 'Wahyu11',
       lastName: '',
       email: 'danang12311@gmail.com',
-      username: 'wahyudanang11',
+      username: 'budi123',
       password: '12345611'
     }
 

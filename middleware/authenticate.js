@@ -1,10 +1,10 @@
-var jwt = require('jsonwebtoken');
+const {verifyToken} = require('../helper/access_token')
 const {User} = require('../models')
 
 let authenticate = (req, res, next) => {
   try {
     let access_token = req.headers.access_token
-    let decode = jwt.verify(access_token, process.env.SECRET)
+    let decode = verifyToken(access_token, process.env.SECRET)
 
     User.findOne({
       where: {

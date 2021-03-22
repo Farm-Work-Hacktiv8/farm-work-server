@@ -1,4 +1,4 @@
-const { Field, Plant } = require('../models')
+const { Field } = require('../models')
 
 class FieldController {
   static getFields(req, res, next) {
@@ -63,7 +63,7 @@ class FieldController {
       }
     })
     .then(field => {
-      if(!field) throw ({name: 'custom', status: 400, msg: "Invalid Field"})
+      if(!field) throw ({name: 'custom', status: 404, msg: "Invalid Field"})
 
       return Field.destroy({
         where: {

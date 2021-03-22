@@ -23,7 +23,7 @@ beforeAll((done)=> {
 })
 
 afterAll((done) => {
-  User.destroy({where: {} })
+  User.destroy({where: {id: userId} })
     .then(() => {
       sequelize.close()
       done()
@@ -63,7 +63,7 @@ describe('POST /login', function() {
 describe('POST /login', function() {
   it('wrong password return status 400 and error msg', function(done) {
     let body = {
-      username: "wahyudanang" ,
+      username: "wahyudanang100" ,
       password: "passwordnya salah"
     }
 

@@ -25,7 +25,7 @@ const field = {
 
 beforeAll((done) => {
     User.create(user)
-        .then((data) => {
+        .then(() => {
             return User.findOne({ where: { username: user.username } });
         })
         .then((data) => {
@@ -55,6 +55,7 @@ afterAll((done) => {
             return clearDBUser({id: userId})
         })
         .then((data) => {
+            sequelize.close()
             done();
         })
         .catch((err) => {
@@ -73,6 +74,12 @@ describe("GET /fields", () => {
                 
                 expect(res.status).toEqual(200);
                 expect(typeof res.body).toEqual("object");
+                expect(res.body).toHaveProperty('error')
+                expect(res.body).toHaveProperty('fieldName')
+                expect(res.body).toHaveProperty('fieldArea')
+                expect(res.body).toHaveProperty('userId')
+                expect(res.body).toHaveProperty('createdAt')
+                expect(res.body).toHaveProperty('updatedAt')
                 done();
             });
     });

@@ -1,6 +1,6 @@
 const {app} = require("../app");
 const request = require("supertest");
-const { User, Field } = require("../models");
+const { User, Field, sequelize } = require("../models");
 const { clearDBField, clearDBUser } = require("../helper/clearDB");
 const { newToken } = require("../helper/access_token");
 
@@ -55,6 +55,7 @@ afterAll((done) => {
             return clearDBUser({id: userId})
         })
         .then((data) => {
+            sequelize.close()
             done();
         })
         .catch((err) => {
@@ -75,7 +76,7 @@ describe("DELETE /fields/:id", () => {
                 expect(res.statusCode).toEqual(200);
                 expect(typeof res.body).toEqual("object");
                 expect(res.body).toHaveProperty("msg");
-                expect(typeof res.body.msg).toEqual("string");
+                expect(res.body.msg).toEqual("Field successfully deleted");
                 done();
             });
     })
@@ -96,6 +97,24 @@ describe("DELETE /fields/:id", () => {
                 expect(res.body.error).toEqual(
                    'Please login first.'
                 );
+                done();
+            });
+    });
+
+    // Test Case: fail - Field not found 
+    it("field id not found with 404 status code", (done) => {
+ 
+        request(app)
+            .delete(`/fields/${fieldId}`)
+            .set("access_token", token)
+            .end((err, res) => {
+                err? done(err) :
+
+                expect(res.statusCode).toEqual(404);
+                expect(typeof res.body).toEqual("object");
+                expect(res.body).toHaveProperty("error");
+                expect(typeof res.body.error).toEqual("string");
+                expect(res.body.error).toEqual('Invalid Field');
                 done();
             });
     });

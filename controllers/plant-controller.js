@@ -34,12 +34,9 @@ class PlantController {
   }
 
   static editPlant (req, res, next) {
-    const {plantId} = req.params
-    const {plantName, harvestTime} = req.body
-
-    if(!plantName) throw ({name: 'custom', status: 400, msg: 'Plant name is required.'})
-
-    if(harvestTime <= 0) throw ({name: 'custom', status: 400, msg: "Harvest time should be greater than 1 day."})
+    const plantId = req.params.plantId
+    const plantName = req.body.plantName
+    const harvestTime = req.body.harvestTime
 
     Plant.update({plantName, harvestTime}, {where : {id: plantId}, returning: true})
     .then((plant) => {
@@ -54,6 +51,8 @@ class PlantController {
     const {plantId} = req.params
     Plant.destroy({where: {id: plantId}, returning: true})
     .then((data) => {
+      if(!data) throw ({name: 'custom', status: 404, msg: 'Plant Not Found'})
+      
       res.status(200).json({msg: 'Delete success'})
     })
     .catch((err) => {
