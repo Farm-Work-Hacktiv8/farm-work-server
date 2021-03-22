@@ -41,7 +41,7 @@ beforeAll((done)=> {
 })
 
 afterAll((done) => {
-    clearDBField({ })
+    clearDBField({})
         .then(() => {
             return clearDBUser({ id: userId });
         })

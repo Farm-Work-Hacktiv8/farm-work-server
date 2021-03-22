@@ -29,6 +29,7 @@ beforeAll((done) => {
             return User.findOne({ where: { username: user.username } });
         })
         .then((data) => {
+            console.log(data, 'ini data user')
             const payload = {
                 id: data.id,
                 username: data.username,
@@ -37,10 +38,12 @@ beforeAll((done) => {
                 lastName: data.lastName,
             };
             userId = data.id
+            field.userId = data.id
             token = newToken(payload);
             return Field.create(field)
         })
         .then((data)=>{
+            console.log(data, 'setelah field create')
             fieldId = data.id
             done()
         })
@@ -73,13 +76,13 @@ describe("GET /fields", () => {
                 err ? done(err) : 
                 
                 expect(res.status).toEqual(200);
-                expect(typeof res.body).toEqual("object");
-                expect(res.body).toHaveProperty('id')
-                expect(res.body).toHaveProperty('fieldName')
-                expect(res.body).toHaveProperty('fieldArea')
-                expect(res.body).toHaveProperty('userId')
-                expect(res.body).toHaveProperty('createdAt')
-                expect(res.body).toHaveProperty('updatedAt')
+                expect(typeof res.body).toContain("object");
+                expect(res.body[0]).toHaveProperty('id')
+                expect(res.body[0]).toHaveProperty('fieldName')
+                expect(res.body[0]).toHaveProperty('fieldArea')
+                expect(res.body[0]).toHaveProperty('userId')
+                expect(res.body[0]).toHaveProperty('createdAt')
+                expect(res.body[0]).toHaveProperty('updatedAt')
                 done();
             });
     });
