@@ -84,6 +84,13 @@ describe('POST /monitor', function() {
 
       expect(res.status).toEqual(201)
       expect(typeof res.body).toEqual('object')
+      expect(res.body.temperature).toEqual(29.4);
+      expect(res.body.humidity).toEqual(56);
+      expect(res.body.wind_speed).toEqual(6.306306);
+      expect(res.body.rain_level).toEqual(1.287554);
+      expect(res.body.latitude).toEqual("-6.8718189");
+      expect(res.body.longitude).toEqual("107.5872477");
+      expect(res.body.moisture).toEqual(101);
       expect(res.body).toHaveProperty('temperature')
       expect(res.body).toHaveProperty('humidity')
       expect(res.body).toHaveProperty('wind_speed')
@@ -109,6 +116,13 @@ describe('GET /data', function() {
 
       expect(res.status).toEqual(200)
       expect(typeof res.body).toEqual('object')
+      expect(res.body.temperature).toEqual(29.4);
+      expect(res.body.humidity).toEqual(56);
+      expect(res.body.wind_speed).toEqual(6.306306);
+      expect(res.body.rain_level).toEqual(1.287554);
+      expect(res.body.latitude).toEqual("-6.8718189");
+      expect(res.body.longitude).toEqual("107.5872477");
+      expect(res.body.moisture).toEqual(101);
       expect(res.body).toHaveProperty('temperature')
       expect(res.body).toHaveProperty('humidity')
       expect(res.body).toHaveProperty('wind_speed')

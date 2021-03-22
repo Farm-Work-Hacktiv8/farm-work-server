@@ -85,6 +85,8 @@ describe("PUT /fields/:id", () => {
                 expect(res.body).toHaveProperty("fieldArea");
                 expect(typeof res.body.fieldName).toEqual("string");
                 expect(typeof res.body.fieldArea).toEqual("number");
+                expect(res.body.fieldName).toEqual(body.fieldName);
+                expect(res.body.fieldArea).toEqual(body.fieldArea);
 
                 done();
             });
@@ -103,8 +105,8 @@ describe("PUT /fields/:id", () => {
             .send(body)
             .end((err, res) => {
                 err ? done(err) : expect(res.statusCode).toEqual(400);
-                expect(typeof res.body).toEqual("object");
                 expect(res.body).toHaveProperty("error");
+                expect(typeof res.body).toEqual("object");
                 expect(typeof res.body.error).toEqual("string");
                 expect(res.body.error).toEqual("Field name is required.");
 
