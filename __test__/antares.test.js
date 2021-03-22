@@ -1,5 +1,5 @@
 const request = require('supertest');
-const {app} = require("../app")
+const {app, server} = require("../app")
 const {sequelize, User} = require('../models')
 const { newToken } = require("../helper/access_token");
 
@@ -50,7 +50,7 @@ afterAll((done) => {
 // ========================== GET data from Antares ==========================
 describe('POST /monitor', function() {
   it('hit antares server', function(done) {
-    request(app)
+    request(server)
     .post('/monitor')
     .set("access_token", token)
     .end((err, res) => {

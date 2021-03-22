@@ -39,11 +39,13 @@ beforeAll((done) => {
                 lastName: data.lastName,
             };
             userId = data.id
+            console.log(userId)
             token = newToken(payload);
             return Field.create(field)
         })
         .then((data) => {
             fieldId = data.id
+            console.log(fieldId)
             done();
         })
         .catch((err) => {

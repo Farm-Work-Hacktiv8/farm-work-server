@@ -3,7 +3,10 @@ const {app} = require("../app")
 const {sequelize, User} = require('../models')
 
 afterAll((done) => {
-  User.destroy({where: {username: 'budi1234'} })
+  User.destroy({where: {username: 'budi1234'}})
+    .then(() => {
+      User.destroy({where : {username: 'budi123'}})   
+    })
     .then(() => {
       sequelize.close()
       done()

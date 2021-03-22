@@ -45,10 +45,10 @@ beforeAll((done) => {
 })
 
 afterAll((done) => {
-    // clearDBPlant({ })
-        // .then(() => {
-        //     return clearDBField({ id: fieldId });
-        // })
+    clearDBPlant({where : {plantName : 'Mangga'} })
+        .then(() => {
+            return clearDBField({ id: fieldId });
+        })
     clearDBField({ id: fieldId })
         .then(() => {
             return clearDBUser({ id: userId });
