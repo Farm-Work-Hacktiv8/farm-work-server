@@ -7,13 +7,13 @@ class History {
   antares.setAccessKey('dfe2a7a897cf3bf6:f3d649b0b43e7d88');
   antares.getAll('Hacktiv8','farm', 5)
   .then((response) => {
-    console.log(response)
     let temp = []
-     for (let i = 0 ; i < response.length ; i ++){
+     for (let i = response.length-1 ; i >= 0 ; i --){
        if(response[i].content.pump === 1){
          temp.push(moment(response[i].created_time).format('MMMM Do YYYY, h:mm:ss a'))
        }
      }
+     console.log(temp);
      res.status(200).json(temp)
   })
   .catch((err) => {
