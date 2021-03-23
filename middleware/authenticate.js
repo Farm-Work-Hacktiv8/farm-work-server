@@ -4,7 +4,7 @@ const {User} = require('../models')
 let authenticate = (req, res, next) => {
   try {
     let access_token = req.headers.access_token
-    let decode = verifyToken(access_token, process.env.SECRET)
+    let decode = verifyToken(access_token)
 
     User.findOne({
       where: {
