@@ -84,13 +84,7 @@ describe('POST /monitor', function() {
 
       expect(res.status).toEqual(201)
       expect(typeof res.body).toEqual('object')
-      expect(res.body.temperature).toEqual(29.4);
-      expect(res.body.humidity).toEqual(56);
-      expect(res.body.wind_speed).toEqual(6.306306);
-      expect(res.body.rain_level).toEqual(1.287554);
-      expect(res.body.latitude).toEqual("-6.8718189");
-      expect(res.body.longitude).toEqual("107.5872477");
-      expect(res.body.moisture).toEqual(101);
+
       expect(res.body).toHaveProperty('temperature')
       expect(res.body).toHaveProperty('humidity')
       expect(res.body).toHaveProperty('wind_speed')
@@ -98,6 +92,14 @@ describe('POST /monitor', function() {
       expect(res.body).toHaveProperty('latitude')
       expect(res.body).toHaveProperty('longitude')
       expect(res.body).toHaveProperty('moisture')
+
+      expect(res.body.temperature).toEqual(29.4);
+      expect(res.body.humidity).toEqual(56);
+      expect(res.body.wind_speed).toEqual(6.306306);
+      expect(res.body.rain_level).toEqual(1.287554);
+      expect(res.body.latitude).toEqual("-6.8718189");
+      expect(res.body.longitude).toEqual("107.5872477");
+      expect(res.body.moisture).toEqual(101);
       done()
     });
   });
@@ -116,20 +118,35 @@ describe('GET /data', function() {
 
       expect(res.status).toEqual(200)
       expect(typeof res.body).toEqual('object')
-      expect(res.body.temperature).toEqual(29.4);
-      expect(res.body.humidity).toEqual(56);
-      expect(res.body.wind_speed).toEqual(6.306306);
-      expect(res.body.rain_level).toEqual(1.287554);
-      expect(res.body.latitude).toEqual("-6.8718189");
-      expect(res.body.longitude).toEqual("107.5872477");
-      expect(res.body.moisture).toEqual(101);
+
       expect(res.body).toHaveProperty('temperature')
       expect(res.body).toHaveProperty('humidity')
-      expect(res.body).toHaveProperty('wind_speed')
-      expect(res.body).toHaveProperty('rain_level')
-      expect(res.body).toHaveProperty('latitude')
-      expect(res.body).toHaveProperty('longitude')
       expect(res.body).toHaveProperty('moisture')
+      expect(res.body).toHaveProperty('pump')
+
+      expect(res.body.temperature).toEqual(29.4);
+      expect(res.body.humidity).toEqual(56);
+      expect(res.body.moisture).toEqual(101);
+      expect(res.body.pump).toEqual("");
+      done()
+    });
+  });
+});
+
+// ========================== GET History watering  ==========================
+describe('GET /history', function() {
+  it('GET History watering return status 200', function(done) {
+    request(app)
+    .get('/history')
+    .set("access_token", token)
+    .end((err, res) => {
+      if(err){
+        done(err)
+      }
+
+      expect(res.status).toEqual(200)
+      expect(typeof res.body).toEqual('object')
+      expect(typeof res.body[0]).toEqual('string')
       done()
     });
   });
