@@ -114,7 +114,7 @@ describe("PUT /fields/:id", () => {
             });
     });
 
-    // Test Case : fail - not inputed fieldArea
+    // Test Case : fail - inputed fieldArea with 0 
     it("should send response with 400 status code", (done) => {
         const body = {
             fieldName: "Kebon Jeruk",
@@ -133,6 +133,30 @@ describe("PUT /fields/:id", () => {
                 expect(res.body).toHaveProperty("error");
                 expect(typeof res.body.error).toEqual("string");
                 expect(res.body.error).toEqual("Field area should be greater than 1 meter.");
+
+                done()
+            });
+    });
+
+    // Test Case : fail - not inputed fieldArea
+    it("should send response with 400 status code", (done) => {
+        const body = {
+            fieldName: "Kebon Jeruk",
+            fieldArea: "",
+        };
+
+        request(app)
+            .put(`/fields/${fieldId}`)
+            .set("access_token", token)
+            .send(body)
+            .end((err, res) => {
+                err ? done(err) : 
+                
+                expect(res.statusCode).toEqual(400);
+                expect(typeof res.body).toEqual("object");
+                expect(res.body).toHaveProperty("error");
+                expect(typeof res.body.error).toEqual("string");
+                expect(res.body.error).toEqual("Field Area is required");
 
                 done()
             });
