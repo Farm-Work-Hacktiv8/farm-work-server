@@ -30,6 +30,9 @@ module.exports = (sequelize, DataTypes) => {
           fieldArea: {
               type: DataTypes.INTEGER,
               validate: {
+                  notEmpty: {
+                      msg: 'Field Area is required'
+                  },
                   min: {
                       args: 1,
                       msg: "Field area should be greater than 1 meter.",
