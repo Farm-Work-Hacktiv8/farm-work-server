@@ -132,7 +132,7 @@ describe("PUT /fields/:id", () => {
                 expect(typeof res.body).toEqual("object");
                 expect(res.body).toHaveProperty("error");
                 expect(typeof res.body.error).toEqual("string");
-                expect(res.body.error).toEqual("Field area should be greater than 1 meter.");
+                expect(res.body.error).toEqual("Field area should be greater than 1 hectare.");
 
                 done()
             });

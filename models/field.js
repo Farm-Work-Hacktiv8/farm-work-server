@@ -35,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
                   },
                   min: {
                       args: 1,
-                      msg: "Field area should be greater than 1 meter.",
+                      msg: "Field area should be greater than 1 hectare.",
                   },
               },
           },
